@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class EnemySC : MonoBehaviour
 {
-    int bossHP = 0;
-    int closeHP = 0;
-    int longHP = 0;
+    public int enemyhp;
 
-    public GameObject BossEnemy;
-    public GameObject CloseEnemy;
-    public GameObject LongEnemy;
-    void Start()
+    public void EnemyDie()
     {
-        
+        gameObject.SetActive(false);
     }
     void Update()
     {
-        
+        Debug.Log(enemyhp);
     }
 }
