@@ -9,7 +9,7 @@ public class Monster : MonoBehaviour
     private GameObject hitEffect;
     private void Awake()
     {
-        projectile = Resources.Load<GameObject>("Prefab/fireBall");
+        projectile = Resources.Load<GameObject>("Prefab/Projectile/SoldierProjectile2");
         hitEffect = Resources.Load<GameObject>("Prefab/hitEffect");
     }
     // Start is called before the first frame update

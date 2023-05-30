@@ -104,6 +104,8 @@ public abstract class Soul {
     public SpriteRenderer Sprite { get { return sprite; } set { sprite = value; } }
     protected Animator animator;
     public Animator Anime { get { return animator; } set { animator = value; } }
+    protected AudioSource audioSource;
+    public AudioSource Audio { get { return audioSource; } set { audioSource = value; } }
 
     //소울별로 로드되는 변수
     protected SoulData data;
@@ -142,13 +144,14 @@ public abstract class Soul {
         this.data = DataManager.Instance().SoulDataDic[name].Deepcopy();
     }
 
-    public void Initialize(Collider2D collider, Rigidbody2D rigid, Transform transform, SpriteRenderer sprite, Animator anime)
+    public void Initialize(Collider2D collider, Rigidbody2D rigid, Transform transform, SpriteRenderer sprite, Animator anime, AudioSource audioSource)
     {
         this.collider = collider;
         this.rigid = rigid;
         this.transform = transform;
         this.sprite = sprite;
         this.animator = anime;
+        this.audioSource = audioSource;
         this.isOnGround = false;
     }
 
@@ -191,8 +194,8 @@ public abstract class Soul {
 
     protected void IsGround(Soul soul)
     {
-        RaycastHit2D hit1 = Physics2D.Raycast(soul.transform.position + new Vector3(-0.75f, 0.0f, 0.0f), Vector2.down, 0.1f, 64);
-        RaycastHit2D hit2 = Physics2D.Raycast(soul.transform.position + new Vector3(0.75f, 0.0f, 0.0f), Vector2.down, 0.1f, 64);
+        RaycastHit2D hit1 = Physics2D.Raycast(soul.transform.position + new Vector3(-0.76f, 0.0f, 0.0f), Vector2.down, 0.1f, 64);
+        RaycastHit2D hit2 = Physics2D.Raycast(soul.transform.position + new Vector3(0.76f, 0.0f, 0.0f), Vector2.down, 0.1f, 64);
         if (hit1.collider != null || hit2.collider != null)
         {
             if (soul.rigid.velocity.y == 0)

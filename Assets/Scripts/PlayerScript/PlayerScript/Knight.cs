@@ -10,7 +10,8 @@ public class Knight : Soul
 
     public Knight(string name) : base(name)
     {
-        skills.Add(KeyCode.S, new KnightSkill(this));
+        skills.Add(KeyCode.X, new KnightSkill1(this));
+        skills.Add(KeyCode.C, new KnightSkill2(this));
         state = new KnightIdleState();
     }
 

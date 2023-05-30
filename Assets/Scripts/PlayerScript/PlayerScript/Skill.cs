@@ -9,10 +9,10 @@ abstract public class Skill
     protected float cooldown;
     private float time;
     protected bool isSkillAvailable;
-    public Skill(Soul soul)
+    public Skill(Soul soul, float cooldown)
     {
         this.soul = soul;
-        this.cooldown = 3.0f;
+        this.cooldown = cooldown;
         this.isSkillAvailable = true;
         this.time = 0.0f;
     }
@@ -43,14 +43,14 @@ abstract public class Skill
     }
 }
 
-public class KnightSkill : Skill
+public class KnightSkill1 : Skill
 {
     GameObject prefab;
     private Vector3 startPos = new Vector3();
     private float time;
     private bool isAttacked;
 
-    public KnightSkill(Soul soul) : base(soul)
+    public KnightSkill1(Soul soul) : base(soul, 3.0f)
     {
         prefab = Resources.Load<GameObject>("Prefab/fireBall");
     }
@@ -61,8 +61,6 @@ public class KnightSkill : Skill
         isAttacked = false;
         time = 0.0f;
         startPos = soul.mTransform.position;
-        /*GameObject obj = Object.Instantiate(prefab, soul.mTransform.position + new Vector3(soul.MoveData.lookAt * -1 * 2.0f, 1.0f, 0.0f), soul.mTransform.rotation);
-        obj.GetComponent<Projectile>().Initailize(soul.MoveData.lookAt * -1, 5.0f, 50.0f);*/
         soul.Anime.Play("SKILL1");
     }
 
@@ -105,7 +103,7 @@ public class KnightSkill : Skill
 
     private void CreateHitbox()
     {
-        float offsetX = Mathf.Abs(startPos.x + soul.mTransform.position.x) * 0.5f;
+        float offsetX = (startPos.x + soul.mTransform.position.x) * 0.5f;
         float offsetY = soul.Collider.offset.y;
         float sizeX = Mathf.Abs(startPos.x - soul.mTransform.position.x);
         RaycastHit2D[] hits = Physics2D.BoxCastAll(new Vector2(offsetX, soul.mTransform.position.y + offsetY), new Vector2(sizeX, soul.Collider.bounds.size.y), 0, Vector2.up, 0, (int)Layer.Monster);
@@ -115,14 +113,71 @@ public class KnightSkill : Skill
         }
     }
 }
+public class KnightSkill2 : Skill
+{
+    private Vector2 offset;
+    private Vector2 size;
+    private float delay;
+    private int attackCount;
+    private float time;
 
+    public KnightSkill2(Soul soul) : base(soul, 5.0f)
+    {
+        offset = new Vector2(1.2f, 1.5f);
+        size = new Vector2(2.4f, 3.0f);
+        delay = 0.167f;
+    }
+
+    public override void start(InputManager input)
+    {
+        isSkillAvailable = false;
+        attackCount = 0;
+        time = 0.0f;
+        soul.Anime.Play("SKILL2");
+        CreateHitbox();
+    }
+
+    public override State handleInput(InputManager input)
+    {
+        if (time >= 0.542f)
+            if (soul.IsOnGround)
+                return State.IDLE;
+            else
+                return State.FALL;
+        return State.NULL;
+    }
+
+    public override void update(InputManager input) { }
+
+    public override void fixedUpdate(InputManager input)
+    {
+        time += Time.fixedDeltaTime;
+        if (time >= delay && attackCount < 2)
+        {
+            CreateHitbox();
+            attackCount++;
+            time = 0.0f;
+        }
+    }
+
+    public override void end(InputManager input) { }
+
+    private void CreateHitbox()
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(soul.mTransform.position + new Vector3(soul.MoveData.lookAt * offset.x, offset.y, 0.0f), size, 0, Vector2.up, 0, (int)Layer.Monster);
+        foreach (RaycastHit2D hit in hits)
+        {
+            hit.collider.GetComponent<Monster>().Hit();
+        }
+    }
+}
 public class SoldierSkill : Skill
 {
     GameObject prefab;
     private bool isAttack;
     private float degree;
     private Vector2 direction;
-    public SoldierSkill(Soul soul) : base(soul)
+    public SoldierSkill(Soul soul) : base(soul, 0.0f)
     {
         prefab = Resources.Load<GameObject>("Prefab/fireBall");
         isAttack = false;

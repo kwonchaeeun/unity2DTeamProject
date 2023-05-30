@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 10b9f1edaf027d04c87d1f557b03eb8f
+guid: db5401ed53e55534fb0d7edca15ad516
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 526
+        width: 524
         height: 260
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -119,8 +119,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 672d8f81cf5e85240878aaad0645d98c
-      internalID: 1836057010
+      spriteID: 300dca77cd2a763408b59fb84f2b31f0
+      internalID: 1225748039
       vertices: []
       indices: 
       edges: []
@@ -129,9 +129,9 @@ TextureImporter:
       name: KnightJumpAttack_1
       rect:
         serializedVersion: 2
-        x: 526
+        x: 524
         y: 0
-        width: 526
+        width: 524
         height: 260
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -140,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 196c0a328155b1a49bf2092bbe8d2488
-      internalID: 1158525235
+      spriteID: 7fcd4164b540a884ea1e870f82a428db
+      internalID: 1310590606
       vertices: []
       indices: 
       edges: []
@@ -150,9 +150,9 @@ TextureImporter:
       name: KnightJumpAttack_2
       rect:
         serializedVersion: 2
-        x: 1052
+        x: 1048
         y: 0
-        width: 526
+        width: 524
         height: 260
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -161,8 +161,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf016290f105d6f47a033cca2ded2ff0
-      internalID: -424010110
+      spriteID: eaf15f841b864fb4aa2eeedf7472a510
+      internalID: 1648745498
       vertices: []
       indices: 
       edges: []
@@ -171,9 +171,9 @@ TextureImporter:
       name: KnightJumpAttack_3
       rect:
         serializedVersion: 2
-        x: 1578
+        x: 1572
         y: 0
-        width: 526
+        width: 524
         height: 260
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -182,8 +182,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e7c9c53d36696f4abd86bf04a907da8
-      internalID: 486579438
+      spriteID: cf3cc8ac0b289e74b84fc5d628b74a1a
+      internalID: 171090969
       vertices: []
       indices: 
       edges: []
@@ -192,9 +192,9 @@ TextureImporter:
       name: KnightJumpAttack_4
       rect:
         serializedVersion: 2
-        x: 2104
+        x: 2096
         y: 0
-        width: 526
+        width: 524
         height: 260
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -203,8 +203,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39b20d3e919f2874dbf198be6f6e6894
-      internalID: 1479023321
+      spriteID: 9a4fb10bf44e1464c89960373f1983fd
+      internalID: 714684277
       vertices: []
       indices: 
       edges: []
@@ -220,11 +220,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      KnightJumpAttack_2: -424010110
-      KnightJumpAttack_3: 486579438
-      KnightJumpAttack_1: 1158525235
-      KnightJumpAttack_4: 1479023321
-      KnightJumpAttack_0: 1836057010
+      KnightJumpAttack_2: 1648745498
+      KnightJumpAttack_3: 171090969
+      KnightJumpAttack_1: 1310590606
+      KnightJumpAttack_4: 714684277
+      KnightJumpAttack_0: 1225748039
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

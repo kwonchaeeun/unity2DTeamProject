@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
             return;
         input.moveDir = Input.GetAxisRaw("Horizontal");
 
-        if (!(input.isJumpKeyDown || input.isDownJumpKeyDown) && Input.GetButtonDown("Jump"))
+        if (!(input.isJumpKeyDown || input.isDownJumpKeyDown) && Input.GetButtonDown("Jump") && currSoul.MoveData.jumpCount < currSoul.Data.availableJumpCount)
         {
             if (!Input.GetKey(KeyCode.DownArrow))
             {
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
                 input.isDownJumpKeyDown = true;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.C) && currSoul.mCooldownTime.dashCoolingdown && currSoul.Data.isUseDash)
+        else if (Input.GetKeyDown(KeyCode.LeftShift) && currSoul.mCooldownTime.dashCoolingdown && currSoul.Data.isUseDash)
         {
             input.isDashKeyDown = true;
         }
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         {
             input.isAttackKeyDown = true;
         }
-        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        else if (Input.GetKeyDown(KeyCode.Tab))
         {
             bool result = SwapSoul();
             if (result)
@@ -95,15 +95,15 @@ public class PlayerController : MonoBehaviour
         }
         if (!input.isSkillKeyDown.Item1)
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.X))
             {
-                if (currSoul.Skills.ContainsKey(KeyCode.S) && currSoul.Skills[KeyCode.S].CanUseSkill())
-                    input.isSkillKeyDown = (true, KeyCode.S);
+                if (currSoul.Skills.ContainsKey(KeyCode.X) && currSoul.Skills[KeyCode.X].CanUseSkill())
+                    input.isSkillKeyDown = (true, KeyCode.X);
             }
-            else if (Input.GetKeyDown(KeyCode.A))
+            else if (Input.GetKeyDown(KeyCode.C))
             {
-                if (currSoul.Skills.ContainsKey(KeyCode.A) && currSoul.Skills[KeyCode.A].CanUseSkill())
-                    input.isSkillKeyDown = (true, KeyCode.A);
+                if (currSoul.Skills.ContainsKey(KeyCode.C) && currSoul.Skills[KeyCode.C].CanUseSkill())
+                    input.isSkillKeyDown = (true, KeyCode.C);
             }
         }
         currSoul.HandleInput(input);
@@ -120,9 +120,9 @@ public class PlayerController : MonoBehaviour
         object[] args = new object[] { "Knight" };
         Type t = Type.GetType("Knight");
         ownSouls.Add((Soul)System.Activator.CreateInstance(t, args));
-        ownSouls[currIndex].Initialize(this.GetComponent<Collider2D>(), this.GetComponent<Rigidbody2D>(), this.transform, this.GetComponent<SpriteRenderer>(), this.GetComponent<Animator>());
+        ownSouls[currIndex].Initialize(this.GetComponent<Collider2D>(), this.GetComponent<Rigidbody2D>(), this.transform, this.GetComponent<SpriteRenderer>(), this.GetComponent<Animator>(), this.GetComponent<AudioSource>());
         currSoul = ownSouls[currIndex];
-        this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load("Animator/" + currSoul.Data.name + "_Anime") as RuntimeAnimatorController;
+        this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load("Animator/SoulAnimator/" + currSoul.Data.name + "_Anime") as RuntimeAnimatorController;
     }
 
     public bool SwapSoul()
@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
             }
             //currSoul.SwapingSoul(input);
             currSoul = ownSouls[currIndex];
-            this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load("Animator/" + currSoul.Data.name + "_Anime") as RuntimeAnimatorController;
+            this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load("Animator/SoulAnimator/" + currSoul.Data.name + "_Anime") as RuntimeAnimatorController;
             Debug.Log("소울 변경");
             return true;
         }
@@ -160,14 +160,14 @@ public class PlayerController : MonoBehaviour
             object[] args = new object[] { name };
             Type t = Type.GetType(name);
             ownSouls.Add((Soul)System.Activator.CreateInstance(t, args));
-            ownSouls[ownSouls.Count - 1].Initialize(this.GetComponent<Collider2D>(), this.GetComponent<Rigidbody2D>(), this.transform, this.GetComponent<SpriteRenderer>(), this.GetComponent<Animator>());
+            ownSouls[ownSouls.Count - 1].Initialize(this.GetComponent<Collider2D>(), this.GetComponent<Rigidbody2D>(), this.transform, this.GetComponent<SpriteRenderer>(), this.GetComponent<Animator>(), this.GetComponent<AudioSource>());
         }
         else
         {
             object[] args = new object[] { name };
             Type t = Type.GetType(name);
             ownSouls[selectedNum] = (Soul)System.Activator.CreateInstance(t, args);
-            ownSouls[selectedNum].Initialize(this.GetComponent<Collider2D>(), this.GetComponent<Rigidbody2D>(), this.transform, this.GetComponent<SpriteRenderer>(), this.GetComponent<Animator>());
+            ownSouls[selectedNum].Initialize(this.GetComponent<Collider2D>(), this.GetComponent<Rigidbody2D>(), this.transform, this.GetComponent<SpriteRenderer>(), this.GetComponent<Animator>(), this.GetComponent<AudioSource>());
         }
     }
 
