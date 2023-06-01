@@ -6,9 +6,10 @@ public class BossPattern4Obj : MonoBehaviour
 {
     // Start is called before the first frame update
     public BoxCollider2D boxCollider2D;
+    GameObject BossObj; 
     void Start()
     {
-        
+        BossObj = GameObject.Find("BossEnemy");
     }
 
     // Update is called once per frame
@@ -32,6 +33,9 @@ public class BossPattern4Obj : MonoBehaviour
         {
             yield return new WaitForSeconds(2f);
             boxCollider2D.enabled = true;
+            BossSc bossObj = BossObj.GetComponent<BossSc>();
+            bossObj.randomIndex = Random.Range(0, 4);
+            gameObject.SetActive(false);
         }
     }
 

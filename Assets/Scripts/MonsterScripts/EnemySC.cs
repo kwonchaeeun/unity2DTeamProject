@@ -10,8 +10,10 @@ public class EnemySC : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    void Update()
+
+    public void Hit()
     {
-        Debug.Log(enemyhp);
+        enemyhp -=1;
     }
+
 }

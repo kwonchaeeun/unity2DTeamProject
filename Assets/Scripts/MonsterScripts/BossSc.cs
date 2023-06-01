@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class BossSc : MonoBehaviour
 {
-    int randomIndex;
+    public int randomIndex;
 
-    public float speed = 5f; 
+    private float speed = 5f; 
     private Transform player;
     private bool isChasing = false;
     private bool isMovingRight = true;
     bool pattern1 = false;
-
     public GameObject rightObject2;
     public GameObject leftObject2; 
     
@@ -80,6 +79,7 @@ public class BossSc : MonoBehaviour
                 isChasing = false;
                 speed = 0f;
                 StartCoroutine(ResumeChasingAfterDelay(3f));
+                Debug.Log("wall");
             }
 
             if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -96,11 +96,12 @@ public class BossSc : MonoBehaviour
         speed = 5f;
 
         randomIndex = Random.Range(0, 4);
+        pattern1 = false;
     }
     
     void Pattern2()
     {
-        if (player != null && !isChasing)
+        if (player != null)
         {
             if (Vector2.Distance(transform.position, player.position) < 10)
             {
@@ -108,20 +109,20 @@ public class BossSc : MonoBehaviour
 
                 if (playerDirection.x > 0)
                 {
-                    leftObject2.SetActive(true);
-                    rightObject2.SetActive(false);
+                    rightObject2.SetActive(true);
+                    leftObject2.SetActive(false);
                 }
                 else
                 {
-                    rightObject2.SetActive(true);
-                    leftObject2.SetActive(false);
+                    leftObject2.SetActive(true);
+                    rightObject2.SetActive(false);
                 }
             }
         }
     }
     void Pattern3()
     {
-        if (player != null && !isChasing)
+        if (player != null)
         {
             if (Vector2.Distance(transform.position, player.position) < 20)
             {
@@ -139,12 +140,11 @@ public class BossSc : MonoBehaviour
 
                 }
             }
-        }
-        
+        } 
     }
     void Pattern4()
      {
-        if (player != null && !isChasing)
+        if (player != null)
         {
             if (Vector2.Distance(transform.position, player.position) < 20)
             {
@@ -163,6 +163,5 @@ public class BossSc : MonoBehaviour
                 }
             }
         }
-        
     }    
 }

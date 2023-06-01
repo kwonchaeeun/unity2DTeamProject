@@ -14,10 +14,13 @@ public class BossPattern3Obj : MonoBehaviour
     public float speed = 0.02f;
     private Vector3 initialPosition; 
 
+    GameObject BossObj; 
+
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("BossEnemy").GetComponent<Transform>();
         initialPosition = transform.position;
+        BossObj = GameObject.Find("BossEnemy");
     }
 
  void Update()
@@ -69,6 +72,9 @@ public class BossPattern3Obj : MonoBehaviour
         yield return new WaitForSeconds(2f);
         moveSpeed = 5f;
         isMovingLeft = true;
+        BossSc bossObj = BossObj.GetComponent<BossSc>();
+        bossObj.randomIndex = Random.Range(0, 4);
+        gameObject.SetActive(false);
     }
 
     void RightObj()
@@ -107,6 +113,9 @@ public class BossPattern3Obj : MonoBehaviour
         yield return new WaitForSeconds(2f);
         moveSpeed = 5f;
         isMovingLeft = true;
+        BossSc bossObj = BossObj.GetComponent<BossSc>();
+        bossObj.randomIndex = Random.Range(0, 4);
+        gameObject.SetActive(false);
     }
 
     void OnCollisionEnter2D(Collision2D other)

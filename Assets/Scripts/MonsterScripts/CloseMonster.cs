@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CloseMonster : EnemySC
 {
-    // Start is called before the first frame update
+    public Slider healthBarSlider;
     void Start()
     {
         enemyhp = 5;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(enemyhp == 0){
@@ -22,7 +22,8 @@ public class CloseMonster : EnemySC
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            enemyhp -=1;
+            Hit();
+            healthBarSlider.value -= .2f;
             Debug.Log(enemyhp);
         }
     }
