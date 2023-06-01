@@ -66,10 +66,15 @@ abstract public class IdleState : SoulState
 
 abstract public class WalkState : SoulState
 {
+    AudioClip audioClip;
     override public void start(Soul soul, InputManager input)
     {
+        audioClip = Resources.Load<AudioClip>("Sound/Public/Walk/Walk");
+        soul.Audio.clip = audioClip;
+        Debug.Log(audioClip.name);
         Debug.Log("Walk");
         soul.Anime.Play("WALK");
+        soul.Audio.Play();
     }
 
     override public SoulState handleInput(Soul soul, InputManager input)
@@ -118,18 +123,27 @@ abstract public class WalkState : SoulState
     {
         soul.mTransform.position = Vector2.MoveTowards(soul.mTransform.position, soul.mTransform.position + new Vector3(input.moveDir * soul.Data.speed * Time.fixedDeltaTime, 0, 0), 0.8f);
     }
+
+    public override void end(Soul soul, InputManager input)
+    {
+        soul.Audio.Stop();
+    }
 }
 
 abstract public class JumpState : SoulState
 {
+    AudioClip audioClip;
     override public void start(Soul soul, InputManager input)
     {
+        audioClip = Resources.Load<AudioClip>("Sound/Public/Jump/Jump");
+        soul.Audio.clip = audioClip;
         Debug.Log("Jump");
         soul.Anime.Play("JUMP");
         soul.IsOnGround = false;
         Jump(soul);
         input.isJumpKeyDown = false;
         soul.Rigid.gravityScale = soul.MoveData.generalGravityScale;
+        soul.Audio.Play();
     }
 
     override public SoulState handleInput(Soul soul, InputManager input)
@@ -184,6 +198,7 @@ abstract public class JumpState : SoulState
 
 abstract public class FallState : SoulState
 {
+    AudioClip audioClip;
     public override void start(Soul soul, InputManager input)
     {
         Debug.Log("Fall");
@@ -238,6 +253,16 @@ abstract public class FallState : SoulState
         }
         soul.mTransform.position = Vector2.MoveTowards(soul.mTransform.position, soul.mTransform.position + new Vector3(input.moveDir * soul.Data.speed * Time.fixedDeltaTime, 0, 0), 0.8f);
     }
+
+    public override void end(Soul soul, InputManager input)
+    {
+        if(soul.IsOnGround)
+        {
+            audioClip = Resources.Load<AudioClip>("Sound/Public/Jump/landing");
+            soul.Audio.clip = audioClip;
+            soul.Audio.Play();
+        }
+    }
 }
 
 abstract public class DashState : SoulState
@@ -283,7 +308,7 @@ abstract public class DashState : SoulState
 
 abstract public class GroundBasicAttackState : SoulState
 {
-    protected float[] attackDelay = { 0.45f, 0.33f, 0.33f };
+    protected float[] attackDelay = new float[3];
     protected float time;
     protected bool isAttack = false;
 
@@ -311,6 +336,7 @@ abstract public class GroundBasicAttackState : SoulState
     {
         time += Time.deltaTime;
     }
+
     abstract override public void fixedUpdate(Soul soul, InputManager input);
     override public void end(Soul soul, InputManager input)
     {
@@ -341,6 +367,8 @@ abstract public class AirBasicAttackState : SoulState
             else
                 innerState = State.FALL;
         }
+        if (soul.IsOnGround)
+            innerState = State.IDLE;
         return soul.StateChanger(innerState);
     }
 
@@ -351,10 +379,6 @@ abstract public class AirBasicAttackState : SoulState
 
     public override void fixedUpdate(Soul soul, InputManager input)
     {
-        if (time >= (delay * 0.5f) && !isAttack)
-        {
-            isAttack = createHitbox(soul);
-        }
     }
 
     public override void end(Soul soul, InputManager input)
@@ -362,23 +386,12 @@ abstract public class AirBasicAttackState : SoulState
         input.isAttackKeyDown = false;
         isAttack = false;
     }
-
-    private bool createHitbox(Soul soul)
-    {
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(soul.mTransform.position + new Vector3(soul.MoveData.lookAt * 1.0f, 0.75f, 0), new Vector2(1.8f, 1.4f), 0, Vector2.up, 0, 128);
-        if (hits != null)
-        {
-            foreach (RaycastHit2D hit in hits)
-            {
-                hit.collider.gameObject.SendMessage("Hit", null, SendMessageOptions.RequireReceiver);
-            }
-        }
-        return true;
-    }
 }
 
 abstract public class MeleeGroundBasicAttackState : GroundBasicAttackState
 {
+    protected Vector2 offset;
+    protected Vector2 size;
     public override void start(Soul soul, InputManager input)
     {
         base.start(soul, input);
@@ -394,7 +407,33 @@ abstract public class MeleeGroundBasicAttackState : GroundBasicAttackState
 
     private bool createHitbox(Soul soul)
     {
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(soul.mTransform.position + new Vector3(soul.MoveData.lookAt * 1.0f, 0.75f, 0), new Vector2(1.8f, 1.4f), 0, Vector2.up, 0, 128);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(soul.mTransform.position + new Vector3(soul.MoveData.lookAt * offset.x, offset.y, 0), size, 0, Vector2.up, 0, 128);
+        if (hits != null)
+        {
+            foreach (RaycastHit2D hit in hits)
+            {
+                hit.collider.gameObject.SendMessage("Hit", null, SendMessageOptions.RequireReceiver);
+            }
+        }
+        return true;
+    }
+}
+
+abstract public class MeleeAirBasicAttackState : AirBasicAttackState
+{
+    protected Vector2 offset;
+    protected Vector2 size;
+    public override void fixedUpdate(Soul soul, InputManager input)
+    {
+        if (time >= (delay * 0.5f) && !isAttack)
+        {
+            isAttack = createHitbox(soul);
+        }
+    }
+
+    private bool createHitbox(Soul soul)
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(soul.mTransform.position + new Vector3(soul.MoveData.lookAt * offset.x, offset.y, 0), size, 0, Vector2.up, 0, 128);
         if (hits != null)
         {
             foreach (RaycastHit2D hit in hits)
@@ -408,7 +447,8 @@ abstract public class MeleeGroundBasicAttackState : GroundBasicAttackState
 
 abstract public class RangedGroundBasicAttackState : GroundBasicAttackState
 {
-    protected GameObject projectile;
+    protected List<GameObject> projectile = new List<GameObject>();
+    protected int projectileIndex = 0;
     protected Vector2 direction;
     protected float degree = 0.0f;
     public override void start(Soul soul, InputManager input)
@@ -417,25 +457,23 @@ abstract public class RangedGroundBasicAttackState : GroundBasicAttackState
         direction = new Vector2(soul.MoveData.lookAt, 0.0f);
     }
 
-    public override void fixedUpdate(Soul soul, InputManager input)
+    public override void update(Soul soul, InputManager input)
     {
+        time += Time.deltaTime;
         if (time >= (attackDelay[soul.AttackCount] * 0.5f) && !isAttack)
         {
-            isAttack = createProjectile(soul);
+            isAttack = createProjectile(soul, projectileIndex);
         }
     }
 
-    protected bool createProjectile(Soul soul)
+    public override void fixedUpdate(Soul soul, InputManager input) { }
+
+    protected bool createProjectile(Soul soul, int index)
     {
-        GameObject obj = Object.Instantiate(projectile, soul.mTransform.position + new Vector3(soul.MoveData.lookAt * soul.Collider.bounds.size.x, soul.Collider.offset.y, 0.0f), Quaternion.identity);
+        GameObject obj = Object.Instantiate(projectile[index], soul.mTransform.position + new Vector3(soul.MoveData.lookAt * soul.Collider.bounds.size.x, soul.Collider.offset.y, 0.0f), Quaternion.identity);
         obj.GetComponent<Projectile>().Initailize(soul.MoveData.lookAt, direction, 5.0f, soul.Data.damage);
         return true;
     }
-}
-
-abstract public class MeleeAirBasicAttackState : AirBasicAttackState
-{
-
 }
 
 abstract public class RangedAirBasicAttackState : AirBasicAttackState
@@ -523,13 +561,17 @@ public class HitState : SoulState
 public class DeadState : SoulState
 {
     float time;
+    AudioClip audioClip;
+
     GameObject dead;
     public override void start(Soul soul, InputManager input)
     {
         time = 0.0f;
         Debug.Log("Dead");
         dead = Object.Instantiate(Resources.Load<GameObject>("Prefab/DeadMain"), soul.mTransform.position, soul.mTransform.rotation);
-        switch(soul.MoveData.lookAt)
+        audioClip = Resources.Load<AudioClip>("Sound/Public/Dead/Dead");
+        soul.Audio.clip = audioClip;
+        switch (soul.MoveData.lookAt)
         {
             case 1 :
                 dead.GetComponent<SpriteRenderer>().flipX = false;
@@ -539,6 +581,7 @@ public class DeadState : SoulState
                 break;
         }    
         soul.Anime.Play("DEAD");
+        soul.Audio.Play();
     }
 
     public override SoulState handleInput(Soul soul, InputManager input)

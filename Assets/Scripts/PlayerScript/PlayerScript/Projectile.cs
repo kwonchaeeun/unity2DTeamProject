@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.Translate(direction * speed * Time.fixedDeltaTime);
+        transform.Translate(Vector3.right * lookAt * speed * Time.fixedDeltaTime);
     }
 
     public void Initailize(float lookAt, Vector2 direction, float distance, float damage)
