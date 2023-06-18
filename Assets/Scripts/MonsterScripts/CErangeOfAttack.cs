@@ -5,7 +5,6 @@ using UnityEngine;
 public class CErangeOfAttack : MonoBehaviour
 {   
     private BoxCollider2D boxCollider;
-
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
@@ -17,11 +16,8 @@ public class CErangeOfAttack : MonoBehaviour
         while (true)
         {
             boxCollider.enabled = false;
-
             yield return new WaitForSeconds(2f);
-
             boxCollider.enabled = true;
-
             yield return new WaitForSeconds(2f);
         }
     }
