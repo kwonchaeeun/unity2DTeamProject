@@ -7,7 +7,9 @@ abstract public class Skill
     private string name;
     protected Soul soul;
     protected float cooldown;
+    public float Cooldown { get { return cooldown; } }
     private float time;
+    public float CurrTime { get { return time; } }
     protected bool isSkillAvailable;
     public Skill(Soul soul, float cooldown)
     {
@@ -74,11 +76,14 @@ public class KnightSkill1 : Skill
         return State.NULL;
     }
 
-    public override void update(InputManager input) { }
+    public override void update(InputManager input)
+    {
+        time += Time.deltaTime;
+    }
 
     public override void fixedUpdate(InputManager input)
     {
-        time += Time.fixedDeltaTime;
+
         soul.Rigid.velocity = new Vector2(soul.Rigid.velocity.x, 0.0f);
         if (Vector3.Distance(startPos, soul.mTransform.position) <= 7f)
         {
@@ -147,11 +152,13 @@ public class KnightSkill2 : Skill
         return State.NULL;
     }
 
-    public override void update(InputManager input) { }
+    public override void update(InputManager input)
+    {
+        time += Time.deltaTime;
+    }
 
     public override void fixedUpdate(InputManager input)
     {
-        time += Time.fixedDeltaTime;
         if (time >= delay && attackCount < 2)
         {
             CreateHitbox();
@@ -177,7 +184,7 @@ public class SoldierSkill : Skill
     private bool isAttack;
     private float degree;
     private Vector2 direction;
-    public SoldierSkill(Soul soul) : base(soul, 0.0f)
+    public SoldierSkill(Soul soul) : base(soul, 10.0f)
     {
         prefab = Resources.Load<GameObject>("Prefab/fireBall");
         isAttack = false;
@@ -194,7 +201,7 @@ public class SoldierSkill : Skill
 
     public override State handleInput(InputManager input)
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             isSkillAvailable = false;
             return State.IDLE;

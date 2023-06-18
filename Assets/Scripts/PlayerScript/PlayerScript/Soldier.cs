@@ -10,7 +10,8 @@ public class Soldier : Soul
 
     public Soldier(string name) : base(name)
     {
-        skills.Add(KeyCode.S, new SoldierSkill(this));
+        skills.Add(KeyCode.X, new SoldierSkill(this));
+        skills.Add(KeyCode.C, new SoldierSkill(this));
         state = new SoldierIdleState();
     }
 

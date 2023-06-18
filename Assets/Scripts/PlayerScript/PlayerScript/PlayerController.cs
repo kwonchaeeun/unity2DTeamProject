@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using UnityEngine.SceneManagement;
 public enum DamageType
 {
     HP,
@@ -18,6 +18,15 @@ public class InputManager
     public bool isAttackKeyDown;
     public (bool, KeyCode) isSkillKeyDown;
     public InputManager()
+    {
+        moveDir = 0.0f;
+        isJumpKeyDown = false;
+        isDownJumpKeyDown = false;
+        isDashKeyDown = false;
+        isAttackKeyDown = false;
+        isSkillKeyDown = (false, KeyCode.None);
+    }
+    public void reset()
     {
         moveDir = 0.0f;
         isJumpKeyDown = false;
@@ -42,6 +51,16 @@ public class PlayerData
 
 public class PlayerController : MonoBehaviour
 {
+
+    public delegate void healthEventHandler();
+    public healthEventHandler HealthEventHandler;
+
+    public delegate void skillCooldownEventHandler();
+    public skillCooldownEventHandler SkillCooldownEventHandler;
+
+    public delegate void soulSwapEventHandler();
+    public soulSwapEventHandler SoulSwapEventHandler;
+
     private PlayerData playerData = new PlayerData();
     public PlayerData PlayerData { get { return playerData; } }
 
@@ -50,15 +69,23 @@ public class PlayerController : MonoBehaviour
 
     //soul
     private int currIndex = 0;
+    public int MainIndex { get { return currIndex; } }
+    private int subIndex = 1;
+    public int SubIndex { get { return subIndex; } }
     private Soul currSoul;
+    public Soul CurrSoul { get { return currSoul; } }
     private List<Soul> ownSouls;
-
+    public List<Soul> OwnSouls { get { return ownSouls; } }
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         ownSouls = new List<Soul>();
         //base 캐릭터 초기화
         InitializeSoul();
+    }
+    void Start()
+    {
+
     }
 
     // Update is called once per frame
@@ -106,8 +133,11 @@ public class PlayerController : MonoBehaviour
                     input.isSkillKeyDown = (true, KeyCode.C);
             }
         }
+        SkillCooldownEventHandler();
         currSoul.HandleInput(input);
         currSoul.Update(input);
+        if(ownSouls.Count == 2)
+            ownSouls[subIndex].Update(input);
     }
 
     private void FixedUpdate()
@@ -133,9 +163,11 @@ public class PlayerController : MonoBehaviour
             {
                 case 0:
                     currIndex = 1;
+                    subIndex = 0;
                     break;
                 case 1:
                     currIndex = 0;
+                    subIndex = 1;
                     break;
                 default:
                     break;
@@ -144,6 +176,8 @@ public class PlayerController : MonoBehaviour
             currSoul = ownSouls[currIndex];
             this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load("Animator/SoulAnimator/" + currSoul.Data.name + "_Anime") as RuntimeAnimatorController;
             Debug.Log("소울 변경");
+            SoulSwapEventHandler();
+            input.reset();
             return true;
         }
         else
@@ -151,6 +185,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("변경할 소울이 존재하지 않습니다.");
             return false;
         }
+
     }
 
     public void ModifySoul(string name, int selectedNum)
@@ -169,6 +204,7 @@ public class PlayerController : MonoBehaviour
             ownSouls[selectedNum] = (Soul)System.Activator.CreateInstance(t, args);
             ownSouls[selectedNum].Initialize(this.GetComponent<Collider2D>(), this.GetComponent<Rigidbody2D>(), this.transform, this.GetComponent<SpriteRenderer>(), this.GetComponent<Animator>(), this.GetComponent<AudioSource>());
         }
+        SoulSwapEventHandler();
     }
 
     public List<string> GetPlayerSoulNameList()
@@ -195,6 +231,7 @@ public class PlayerController : MonoBehaviour
                 playerData.intellectuality -= damage;
                 break;
         }
+        HealthEventHandler();
         if (!isDead())
         {
             currSoul.Hit(input); 
