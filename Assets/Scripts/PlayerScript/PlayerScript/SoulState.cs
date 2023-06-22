@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 //handelInput에서 조건은 같은데 리턴값이 달라 발생하는 중복코드를 줄이기 위해서 정의한 모든 상태에 대한 enum값 정의
 public enum State
 {
@@ -569,6 +569,8 @@ public class DeadState : SoulState
         time = 0.0f;
         Debug.Log("Dead");
         dead = Object.Instantiate(Resources.Load<GameObject>("Prefab/DeadMain"), soul.mTransform.position, soul.mTransform.rotation);
+        soul.Rigid.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+        dead.GetComponent<Rigidbody2D>().gravityScale = soul.Rigid.gravityScale;
         audioClip = Resources.Load<AudioClip>("Sound/Public/Dead/Dead");
         soul.Audio.clip = audioClip;
         switch (soul.MoveData.lookAt)
@@ -597,5 +599,6 @@ public class DeadState : SoulState
     public override void end(Soul soul, InputManager input)
     {
         Object.Destroy(dead);
+        SceneManager.LoadScene("Test1");
     }
 }
