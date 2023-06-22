@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class enemyBullet : MonoBehaviour
 {
+    private PlayerController playerController;
+
     float launchSpeed = 10f;
     public GameObject BulletR;
     public GameObject BulletL;
@@ -25,6 +27,7 @@ public class enemyBullet : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             Destroy(gameObject);
+            playerController.Hit(DamageType.INTELLECTUALITY, 1);
         }
     } 
 

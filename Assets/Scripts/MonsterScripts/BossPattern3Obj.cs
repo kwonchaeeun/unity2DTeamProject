@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossPattern3Obj : MonoBehaviour
 {
+    private PlayerController playerController;
     private Transform target;
     public GameObject leftObj;
     public GameObject rightObj;
@@ -123,6 +124,7 @@ public class BossPattern3Obj : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log("player");
+            playerController.Hit(DamageType.INTELLECTUALITY, 10);
         }
     }
 }
