@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BossSc : MonoBehaviour
 {
+    private PlayerController playerController;
     public int randomIndex;
 
     private float speed = 5f; 
@@ -18,14 +20,19 @@ public class BossSc : MonoBehaviour
     public GameObject leftObject3; 
     public GameObject rightObject4;
     public GameObject leftObject4; 
+
+    private Animator animator;
     void Start()
     {
         randomIndex = Random.Range(0, 4);
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
+        
         if (randomIndex == 0)
             {
                 Pattern1();
@@ -47,6 +54,7 @@ public class BossSc : MonoBehaviour
     void Pattern1()
     {
         pattern1 = true;
+        animator.SetTrigger("pattern2");
         if (player != null && !isChasing)
         {
             if (Vector2.Distance(transform.position, player.position) < 20f)
@@ -85,6 +93,7 @@ public class BossSc : MonoBehaviour
             if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 Debug.Log("player");
+                playerController.Hit(DamageType.HP, 1);
             }
         }
     }
@@ -103,8 +112,29 @@ public class BossSc : MonoBehaviour
     {
         if (player != null)
         {
-            if (Vector2.Distance(transform.position, player.position) < 10)
+            float distance = Vector2.Distance(transform.position, player.position);
+
+            if (!isChasing && 10 < distance && distance < 20)
             {
+                isChasing = true;
+                isMovingRight = transform.position.x < player.position.x;
+            }
+
+            if (isChasing)
+            {
+                if (isMovingRight)
+                {
+                    transform.Translate(Vector2.right * speed * Time.deltaTime);
+                }
+                else
+                {
+                    transform.Translate(Vector2.left * speed * Time.deltaTime);
+                }
+            }
+            if (distance <= 10)
+            {
+                isChasing = false;
+
                 Vector2 playerDirection = player.position - transform.position;
 
                 if (playerDirection.x > 0)
@@ -164,4 +194,4 @@ public class BossSc : MonoBehaviour
             }
         }
     }    
-}
+} 

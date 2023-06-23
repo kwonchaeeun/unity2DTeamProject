@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class BossPattern2Obj : MonoBehaviour
 {   private Transform target;
+    private PlayerController playerController;
     private float riseSpeed = 2.0f;
     GameObject BossObj; 
     bool isMove = true;
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("BossEnemy").GetComponent<Transform>();
+        playerController = GameObject.FindObjectOfType<PlayerController>();
         BossObj = GameObject.Find("BossEnemy");
     }
     void Update()
@@ -44,7 +46,8 @@ public class BossPattern2Obj : MonoBehaviour
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            Debug.Log("player");
+            playerController.Hit(DamageType.HP, 1);
+            
         }
     }
 }

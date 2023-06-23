@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class CloseMonster : EnemySC
 {
     public Slider healthBarSlider;
+    private float delay = 2f;
     void Start()
     {
-        enemyhp = 5;
+        enemyhp = 10;
     }
 
     void Update()
@@ -16,6 +17,7 @@ public class CloseMonster : EnemySC
         if(enemyhp == 0){
             EnemyDie();
         }
+
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -23,8 +25,17 @@ public class CloseMonster : EnemySC
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Hit();
-            healthBarSlider.value -= .2f;
+            healthBarSlider.value -= .1f;
             Debug.Log(enemyhp);
+            healthBarSlider.gameObject.SetActive(true);
+            delay +=1f;
+            StartCoroutine(OffSlider());
         }
+    }
+
+    IEnumerator OffSlider()
+    {
+        yield return new WaitForSeconds(delay);
+        healthBarSlider.gameObject.SetActive(false);
     }
 }

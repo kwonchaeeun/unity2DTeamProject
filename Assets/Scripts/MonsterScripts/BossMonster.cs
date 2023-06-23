@@ -35,7 +35,6 @@ public class BossMonster : EnemySC
 
     IEnumerator OffSlider()
     {
-        Debug.Log("ji");
         yield return new WaitForSeconds(delay);
         healthBarSlider.gameObject.SetActive(false);
     }

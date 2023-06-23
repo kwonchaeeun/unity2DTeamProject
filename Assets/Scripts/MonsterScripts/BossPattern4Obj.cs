@@ -7,6 +7,7 @@ public class BossPattern4Obj : MonoBehaviour
     // Start is called before the first frame update
     public BoxCollider2D boxCollider2D;
     GameObject BossObj; 
+    private PlayerController playerController;
     void Start()
     {
         BossObj = GameObject.Find("BossEnemy");
@@ -44,6 +45,7 @@ public class BossPattern4Obj : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log("player");
+            playerController.Hit(DamageType.INTELLECTUALITY, 10);
         }
     }
 }

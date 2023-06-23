@@ -5,6 +5,8 @@ using UnityEngine;
 public class CErangeOfAttack : MonoBehaviour
 {   
     private BoxCollider2D boxCollider;
+    private PlayerController playerController;
+
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
@@ -27,6 +29,7 @@ public class CErangeOfAttack : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log("player");
+            playerController.Hit(DamageType.HP, 1);
         }
     }
 }
