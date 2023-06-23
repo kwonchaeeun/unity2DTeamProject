@@ -74,15 +74,11 @@ public class CooldownTime
 {
     public float dashCooldownTime;
     public bool dashCoolingdown;
-    public float skill1CooldownTime;
-    public float skill2CooldownTime;
 
     public CooldownTime()
     {
         this.dashCooldownTime = 5.0f;
         this.dashCoolingdown = true;
-        this.skill1CooldownTime = 6.0f;
-        this.skill2CooldownTime = 6.0f;
     }
 
     public void chageDash()

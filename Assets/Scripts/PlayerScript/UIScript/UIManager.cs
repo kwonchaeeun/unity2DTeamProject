@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
     public int SoulSeclectorUINum { get { return soulSelectorUINum; } }
     private void Awake()
     {
-        soulSelectorUINum = 2;
+        soulSelectorUINum = 3;
     }
     public void ShowStatueUI(Statue statue)
     {

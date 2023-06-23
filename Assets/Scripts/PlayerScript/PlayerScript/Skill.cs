@@ -4,7 +4,6 @@ using UnityEngine;
 
 abstract public class Skill
 {
-    private string name;
     protected Soul soul;
     protected float cooldown;
     public float Cooldown { get { return cooldown; } }
@@ -178,15 +177,15 @@ public class KnightSkill2 : Skill
         }
     }
 }
-public class SoldierSkill : Skill
+public class SoldierSkill1 : Skill
 {
     GameObject prefab;
     private bool isAttack;
     private float degree;
     private Vector2 direction;
-    public SoldierSkill(Soul soul) : base(soul, 10.0f)
+    public SoldierSkill1(Soul soul) : base(soul, 10.0f)
     {
-        prefab = Resources.Load<GameObject>("Prefab/fireBall");
+        prefab = Resources.Load<GameObject>("Prefab/Projectile/SoldierProjectile2");
         isAttack = false;
         degree = 0.0f;
         direction = Vector2.right;

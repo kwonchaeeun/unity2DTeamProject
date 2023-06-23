@@ -56,7 +56,7 @@ public class Projectile : MonoBehaviour
         }
         else if(collision.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerController>().Hit(DamageType.INTELLECTUALITY, 10);
+            collision.gameObject.GetComponent<PlayerController>().Hit(DamageType.HP, 1);
             Destroy(this.gameObject);
         }
         else if(collision.CompareTag("Ground") || collision.CompareTag("Platform"))

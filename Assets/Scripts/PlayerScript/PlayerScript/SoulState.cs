@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 //handelInput에서 조건은 같은데 리턴값이 달라 발생하는 중복코드를 줄이기 위해서 정의한 모든 상태에 대한 enum값 정의
 public enum State
 {
@@ -118,6 +119,7 @@ abstract public class WalkState : SoulState
                 soul.Sprite.flipX = false;
                 break;
         }
+        soul.MoveData.lookAt = (soul.Sprite.flipX) ? -1 : 1;
     }
     public override void fixedUpdate(Soul soul, InputManager input)
     {
@@ -172,7 +174,7 @@ abstract public class JumpState : SoulState
         return soul.StateChanger(innerState);
     }
 
-    override public void fixedUpdate(Soul soul, InputManager input)
+    public override void update(Soul soul, InputManager input)
     {
         switch (input.moveDir)
         {
@@ -183,6 +185,10 @@ abstract public class JumpState : SoulState
                 soul.Sprite.flipX = false;
                 break;
         }
+        soul.MoveData.lookAt = (soul.Sprite.flipX) ? -1 : 1;
+    }
+    override public void fixedUpdate(Soul soul, InputManager input)
+    {
         soul.mTransform.position = Vector2.MoveTowards(soul.mTransform.position, soul.mTransform.position + new Vector3(input.moveDir * soul.Data.speed * Time.fixedDeltaTime, 0, 0), 0.8f);
     }
 
@@ -240,7 +246,7 @@ abstract public class FallState : SoulState
         return soul.StateChanger(innerState);
     }
 
-    public override void fixedUpdate(Soul soul, InputManager input)
+    public override void update(Soul soul, InputManager input)
     {
         switch (input.moveDir)
         {
@@ -251,6 +257,11 @@ abstract public class FallState : SoulState
                 soul.Sprite.flipX = false;
                 break;
         }
+        soul.MoveData.lookAt = (soul.Sprite.flipX) ? -1 : 1;
+    }
+
+    public override void fixedUpdate(Soul soul, InputManager input)
+    {
         soul.mTransform.position = Vector2.MoveTowards(soul.mTransform.position, soul.mTransform.position + new Vector3(input.moveDir * soul.Data.speed * Time.fixedDeltaTime, 0, 0), 0.8f);
     }
 
@@ -412,7 +423,7 @@ abstract public class MeleeGroundBasicAttackState : GroundBasicAttackState
         {
             foreach (RaycastHit2D hit in hits)
             {
-                hit.collider.gameObject.SendMessage("Hit", null, SendMessageOptions.RequireReceiver);
+                hit.collider.gameObject.GetComponent<EnemySC>().Hit();
             }
         }
         return true;
@@ -438,7 +449,7 @@ abstract public class MeleeAirBasicAttackState : AirBasicAttackState
         {
             foreach (RaycastHit2D hit in hits)
             {
-                hit.collider.gameObject.SendMessage("Hit", null, SendMessageOptions.RequireReceiver);
+                hit.collider.gameObject.GetComponent<EnemySC>().Hit();
             }
         }
         return true;
@@ -510,12 +521,10 @@ public class SkillAdapterState : SoulState
         skill = soul.Skills[input.isSkillKeyDown.Item2];
         skill.start(input);
     }
-
     public override SoulState handleInput(Soul soul, InputManager input)
     {
         return soul.StateChanger(skill.handleInput(input));
     }
-
     public override void update(Soul soul, InputManager input)
     {
         skill.update(input);
@@ -600,5 +609,11 @@ public class DeadState : SoulState
     {
         Object.Destroy(dead);
         SceneManager.LoadScene("Test1");
+        respawn();
+    }
+
+    private void respawn()
+    {
+
     }
 }

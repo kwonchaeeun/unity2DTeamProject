@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+
 public enum DamageType
 {
     HP,
@@ -41,11 +42,20 @@ public class PlayerData
 {
     public int hp;
     public int intellectuality;
-
+    public int money;
     public PlayerData()
     {
+        this.money = 0;
         this.hp = 3;
         this.intellectuality = 100;
+    }
+    public void AddMoney(int money)
+    {
+        this.money += money;
+    }
+    public void UseMoney(int money)
+    {
+        this.money -= money;
     }
 }
 
@@ -60,6 +70,9 @@ public class PlayerController : MonoBehaviour
 
     public delegate void soulSwapEventHandler();
     public soulSwapEventHandler SoulSwapEventHandler;
+
+    public delegate void moneyEventHandler();
+    public moneyEventHandler MoneyEventHandler;
 
     private PlayerData playerData = new PlayerData();
     public PlayerData PlayerData { get { return playerData; } }
@@ -83,6 +96,7 @@ public class PlayerController : MonoBehaviour
         //base 캐릭터 초기화
         InitializeSoul();
     }
+
     void Start()
     {
 
@@ -93,9 +107,9 @@ public class PlayerController : MonoBehaviour
     {
         if (currSoul == null)
             return;
-        input.moveDir = Input.GetAxisRaw("Horizontal");
 
-        if (!(input.isJumpKeyDown || input.isDownJumpKeyDown) && Input.GetButtonDown("Jump") && currSoul.MoveData.jumpCount < currSoul.Data.availableJumpCount)
+        input.moveDir = Input.GetAxisRaw("Horizontal");
+        if (Input.GetButtonDown("Jump") && currSoul.MoveData.jumpCount < currSoul.Data.availableJumpCount)
         {
             if (!Input.GetKey(KeyCode.DownArrow))
             {
@@ -116,9 +130,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Tab))
         {
-            bool result = SwapSoul();
-            if (result)
-                currSoul.Start(input);
+            SwapSoul();
         }
         if (!input.isSkillKeyDown.Item1)
         {
@@ -132,6 +144,11 @@ public class PlayerController : MonoBehaviour
                 if (currSoul.Skills.ContainsKey(KeyCode.C) && currSoul.Skills[KeyCode.C].CanUseSkill())
                     input.isSkillKeyDown = (true, KeyCode.C);
             }
+        }
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            playerData.AddMoney(300);
+            MoneyEventHandler();
         }
         SkillCooldownEventHandler();
         currSoul.HandleInput(input);
@@ -155,10 +172,11 @@ public class PlayerController : MonoBehaviour
         this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load("Animator/SoulAnimator/" + currSoul.Data.name + "_Anime") as RuntimeAnimatorController;
     }
 
-    public bool SwapSoul()
+    public void SwapSoul()
     {
         if (ownSouls.Count == 2)
         {
+            currSoul.SwapingSoul(input);
             switch (currIndex)
             {
                 case 0:
@@ -172,20 +190,13 @@ public class PlayerController : MonoBehaviour
                 default:
                     break;
             }
-            //currSoul.SwapingSoul(input);
             currSoul = ownSouls[currIndex];
             this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load("Animator/SoulAnimator/" + currSoul.Data.name + "_Anime") as RuntimeAnimatorController;
             Debug.Log("소울 변경");
             SoulSwapEventHandler();
             input.reset();
-            return true;
+            currSoul.Start(input);
         }
-        else
-        {
-            Debug.Log("변경할 소울이 존재하지 않습니다.");
-            return false;
-        }
-
     }
 
     public void ModifySoul(string name, int selectedNum)
@@ -217,6 +228,8 @@ public class PlayerController : MonoBehaviour
         return nameList;
     }
 
+
+
     public void Hit(DamageType damageType, int damage)
     {
         if (currSoul.soulState.GetType() == typeof(DeadState))
@@ -242,14 +255,23 @@ public class PlayerController : MonoBehaviour
         }
             
     }
+
+    public void GetMoney(int money)
+    {
+        playerData.AddMoney(money);
+        MoneyEventHandler();
+    }
+
+    public void UseMoney(int money)
+    {
+        playerData.UseMoney(money);
+        MoneyEventHandler();
+    }
+
     private bool isDead()
     {
         if (playerData.hp <= 0 || playerData.intellectuality <= 0)
             return true;
         return false;
-    }
-    private void OnDrawGizmos()
-    {
-        //Gizmos.DrawWireCube(new Vector2(offsetX, offsetY), new Vector2(offsetX * 2, offsetY * 2));
     }
 }
