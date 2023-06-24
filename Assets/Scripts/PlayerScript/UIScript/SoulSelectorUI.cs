@@ -13,13 +13,17 @@ public class SoulSelectorUI : MonoBehaviour
     private GameObject icon;
 
     private string iconPath = "Sprites/UI/Statue/Icon/";
+    private string soundPath = "Sound/UISound/";
     private int index;
     private bool isActivated;
     private Statue currStatue;
     private int price;
+    private AudioClip[] audioClips = new AudioClip[2];
     // Start is called before the first frame update
     void Start()
     {
+        audioClips[0] = Resources.Load<AudioClip>(soundPath + "BaseClick");
+        audioClips[1] = Resources.Load<AudioClip>(soundPath + "BadClick");
         this.GetComponent<Button>().onClick.AddListener(ModifyPlayerSoul);
     }
 
@@ -58,12 +62,19 @@ public class SoulSelectorUI : MonoBehaviour
             PlayerController controller = GameObject.Find("Player").GetComponent<PlayerController>();
             if (controller.PlayerData.money >= price) 
             {
+                currStatue.Audio.clip = audioClips[0];
+                currStatue.Audio.Play();
                 controller.UseMoney(price);
                 controller.ModifySoul(name.text, 1);
                 currStatue.SetSoulDisabled(index);
                 currStatue.IsActivatedUI = false;
                 UIManager.GetUIManager().HideStatueUi();
                 currStatue = null;
+            }
+            else
+            {
+                currStatue.Audio.clip = audioClips[1];
+                currStatue.Audio.Play();
             }
         }
     }

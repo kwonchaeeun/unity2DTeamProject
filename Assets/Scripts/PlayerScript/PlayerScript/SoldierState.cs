@@ -16,6 +16,7 @@ public class SoldierGroundBasicAttackState : RangedGroundBasicAttackState
 {
     public override void start(Soul soul, InputManager input)
     {
+        audioClip = Resources.Load<AudioClip>("Sound/Soldier/Attack/Attack");
         base.start(soul, input);
         attackDelay[0] = 0.667f;
         attackDelay[1] = 0.667f;
@@ -44,6 +45,8 @@ public class SoldierGroundBasicAttackState : RangedGroundBasicAttackState
                 if (time >= (attackDelay[soul.AttackCount] * 0.5f) && !isAttack)
                 {
                     isAttack = createProjectile(soul, projectileIndex);
+                    soul.Audio.clip = audioClip;
+                    soul.Audio.Play();
                 }
                 break;
             default:
@@ -57,6 +60,7 @@ public class SoldierAirBasicAttackState : RangedAirBasicAttackState
 {
     public override void start(Soul soul, InputManager input)
     {
+        audioClip = Resources.Load<AudioClip>("Sound/Soldier/Attack/Attack");
         base.start(soul, input);
         projectile = Resources.Load<GameObject>("Prefab/Projectile/SoldierProjectile1");
         Debug.Log(projectile.name);
@@ -226,11 +230,15 @@ public class SoldierSkillWalkState : SoldierSkillState
 
 public class SoldierSkillAttackState : SoldierSkillState
 {
+    AudioClip audioClip;
     private float time;
     public override void start(Soul soul, Gun gun)
     {
+        audioClip = Resources.Load<AudioClip>("Sound/Soldier/Attack/LastAttack");
         soul.Anime.Play("SKILL1IDLE");
         gun.gun.GetComponent<Animator>().Play("ATTACK");
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
         time = 0.0f;
         createProjectile(soul, gun);
     }
@@ -269,6 +277,7 @@ public class SoldierSkillFallState : SoldierSkillState
 
 public class SoldierSkill2 : Skill
 {
+    AudioClip audioClip;
     GameObject prefab;
     Vector3 offset;
     float time;
@@ -276,6 +285,7 @@ public class SoldierSkill2 : Skill
     public SoldierSkill2(Soul soul) : base(soul, 5.0f, 20)
     {
         prefab = Resources.Load<GameObject>("Prefab/SoldierBeam");
+        audioClip = Resources.Load<AudioClip>("Sound/Soldier/Skill/Beam");
         time = 0.0f;
     }
     public override void start(InputManager input)
@@ -285,6 +295,8 @@ public class SoldierSkill2 : Skill
         isAttack = false;
         offset = new Vector3(soul.MoveData.lookAt * 1.0f, 1.0f, 0.0f);
         soul.Anime.Play("SKILL2");
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
     }
 
     public override State handleInput(InputManager input)

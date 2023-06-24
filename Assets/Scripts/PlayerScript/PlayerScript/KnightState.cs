@@ -16,6 +16,7 @@ public class KnightGroundBasicAttackState : MeleeGroundBasicAttackState
 {
     public override void start(Soul soul, InputManager input)
     {
+        audioClip = Resources.Load<AudioClip>("Sound/Knight/Attack/Hit/Attack");
         base.start(soul, input);
         attackDelay[0] = 0.42f;
         attackDelay[1] = 0.34f;
@@ -29,6 +30,7 @@ public class KnightAirBasicAttackState : MeleeAirBasicAttackState
 {
     public override void start(Soul soul, InputManager input)
     {
+        audioClip = Resources.Load<AudioClip>("Sound/Knight/Attack/NonHit/Attack");
         base.start(soul, input);
         delay = 0.42f;
         offset = new Vector2(1.1f, soul.Collider.offset.y);
@@ -38,6 +40,7 @@ public class KnightAirBasicAttackState : MeleeAirBasicAttackState
 
 public class KnightSkill1 : Skill
 {
+    AudioClip audioClip;
     GameObject prefab;
     private Vector3 startPos = new Vector3();
     private float time;
@@ -46,6 +49,7 @@ public class KnightSkill1 : Skill
     public KnightSkill1(Soul soul) : base(soul, 3.0f, 10)
     {
         prefab = Resources.Load<GameObject>("Prefab/fireBall");
+        audioClip = Resources.Load<AudioClip>("Sound/Knight/Skill/DashSkill");
     }
 
     public override void start(InputManager input)
@@ -56,6 +60,8 @@ public class KnightSkill1 : Skill
         time = 0.0f;
         startPos = soul.mTransform.position;
         soul.Anime.Play("SKILL1");
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
     }
 
     public override State handleInput(InputManager input)
@@ -113,6 +119,7 @@ public class KnightSkill1 : Skill
 
 public class KnightSkill2 : Skill
 {
+    AudioClip[] audioClips = new AudioClip[3];
     private Vector2 offset;
     private Vector2 size;
     private float delay;
@@ -124,6 +131,9 @@ public class KnightSkill2 : Skill
         offset = new Vector2(1.2f, 1.5f);
         size = new Vector2(2.4f, 3.0f);
         delay = 0.167f;
+        audioClips[0] = Resources.Load<AudioClip>("Sound/Knight/Skill/Slash1");
+        audioClips[1] = Resources.Load<AudioClip>("Sound/Knight/Skill/Slash2");
+        audioClips[2] = Resources.Load<AudioClip>("Sound/Knight/Skill/Slash1");
     }
 
     public override void start(InputManager input)
@@ -133,6 +143,8 @@ public class KnightSkill2 : Skill
         attackCount = 0;
         time = 0.0f;
         soul.Anime.Play("SKILL2");
+        soul.Audio.clip = audioClips[attackCount];
+        soul.Audio.Play();
         CreateHitbox();
     }
 
@@ -155,6 +167,8 @@ public class KnightSkill2 : Skill
     {
         if (time >= delay && attackCount < 2)
         {
+            soul.Audio.clip = audioClips[attackCount + 1];
+            soul.Audio.Play();
             CreateHitbox();
             attackCount++;
             time = 0.0f;

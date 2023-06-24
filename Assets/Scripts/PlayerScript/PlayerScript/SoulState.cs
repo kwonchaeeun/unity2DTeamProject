@@ -315,6 +315,7 @@ abstract public class DashState : SoulState
 
 abstract public class GroundBasicAttackState : SoulState
 {
+    protected AudioClip audioClip;
     protected float[] attackDelay = new float[3];
     protected float time;
     protected bool isAttack = false;
@@ -324,6 +325,8 @@ abstract public class GroundBasicAttackState : SoulState
         Debug.Log("Attack" + soul.AttackCount);
         soul.attacking = true;
         soul.Anime.Play("ATTACK" + soul.AttackCount.ToString());
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
         time = 0.0f;
     }
 
@@ -356,6 +359,7 @@ abstract public class GroundBasicAttackState : SoulState
 
 abstract public class AirBasicAttackState : SoulState
 {
+    protected AudioClip audioClip;
     protected float delay = 0.42f;
     protected float time = 0.0f;
     protected bool isAttack = false;
@@ -363,6 +367,8 @@ abstract public class AirBasicAttackState : SoulState
     {
         Debug.Log("AirAttack");
         soul.Anime.Play("AIRATTACK");
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
     }
 
     public override SoulState handleInput(Soul soul, InputManager input)
@@ -539,10 +545,14 @@ public class SkillAdapterState : SoulState
 public class HitState : SoulState
 {
     float time;
+    AudioClip audioClip;
     public override void start(Soul soul, InputManager input)
     {
         Debug.Log("HitState");
         soul.Anime.Play("HIT");
+        audioClip = Resources.Load<AudioClip>("Sound/Public/Hit/HPHit");
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
         time = 0.0f;
     }
     public override SoulState handleInput(Soul soul, InputManager input)

@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
     }
 
     private static UIManager instance;
-    
+
     [SerializeField]
     private GameObject statueUI;
     private int soulSelectorUINum;
@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     {
         soulSelectorUINum = 3;
     }
+
     public void ShowStatueUI(Statue statue)
     {
         statueUI.SetActive(true);
