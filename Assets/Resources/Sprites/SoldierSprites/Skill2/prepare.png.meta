@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 62b13fdd70d553842bbe523343c37b35
+guid: 1a970220cf9c5a440b49012f88b02dc5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,64 +105,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: atk2projectile_0
+      name: prepare_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 115
-        height: 57
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d1bbf8732661d446befd08b0ee4b66c
-      internalID: 1452683622
+      spriteID: 95b987fa21efa844db670a321e5ae15a
+      internalID: -485957633
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: atk2projectile_1
+      name: prepare_1
       rect:
         serializedVersion: 2
-        x: 115
+        x: 260
         y: 0
-        width: 115
-        height: 57
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0356c1c2adbe3d42b9ab97944185003
-      internalID: 1807655342
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: atk2projectile_2
-      rect:
-        serializedVersion: 2
-        x: 230
-        y: 0
-        width: 115
-        height: 57
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 25c5362c1811ab1438104bf122923f7d
-      internalID: -1806854754
+      spriteID: cd90eb3af74afeb49bfa6eb2e4339ce6
+      internalID: -1649391112
       vertices: []
       indices: 
       edges: []
@@ -178,9 +157,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      atk2projectile_2: -1806854754
-      atk2projectile_0: 1452683622
-      atk2projectile_1: 1807655342
+      prepare_0: -485957633
+      prepare_1: -1649391112
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

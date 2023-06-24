@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 62b13fdd70d553842bbe523343c37b35
+guid: 203da88249d05e343b136151cfef77bf
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,64 +105,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: atk2projectile_0
+      name: shooting_falling_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 115
-        height: 57
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d1bbf8732661d446befd08b0ee4b66c
-      internalID: 1452683622
+      spriteID: 96f0cd04abbf48941ab1bc28121dcf97
+      internalID: 36802491
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: atk2projectile_1
+      name: shooting_falling_1
       rect:
         serializedVersion: 2
-        x: 115
+        x: 260
         y: 0
-        width: 115
-        height: 57
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0356c1c2adbe3d42b9ab97944185003
-      internalID: 1807655342
+      spriteID: 7a3e9b20fa04f534099b764053d57975
+      internalID: -232479759
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: atk2projectile_2
+      name: shooting_falling_2
       rect:
         serializedVersion: 2
-        x: 230
+        x: 520
         y: 0
-        width: 115
-        height: 57
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25c5362c1811ab1438104bf122923f7d
-      internalID: -1806854754
+      spriteID: b7a2c0c5888643140b50817e9c2c94ac
+      internalID: -159277066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting_falling_3
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 0
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c11f4fd0e90c3147849b0206d581de2
+      internalID: 648879883
       vertices: []
       indices: 
       edges: []
@@ -178,9 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      atk2projectile_2: -1806854754
-      atk2projectile_0: 1452683622
-      atk2projectile_1: 1807655342
+      shooting_falling_0: 36802491
+      shooting_falling_2: -159277066
+      shooting_falling_3: 648879883
+      shooting_falling_1: -232479759
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

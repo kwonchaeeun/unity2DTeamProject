@@ -57,6 +57,10 @@ public class PlayerData
     {
         this.money -= money;
     }
+    public void UseIntellectuality(int cost)
+    {
+        this.intellectuality -= cost;
+    }
 }
 
 public class PlayerController : MonoBehaviour
@@ -89,6 +93,7 @@ public class PlayerController : MonoBehaviour
     public Soul CurrSoul { get { return currSoul; } }
     private List<Soul> ownSouls;
     public List<Soul> OwnSouls { get { return ownSouls; } }
+    private float time = 0.0f;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -99,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-
+        HealthEventHandler += Death;
     }
 
     // Update is called once per frame
@@ -107,6 +112,17 @@ public class PlayerController : MonoBehaviour
     {
         if (currSoul == null)
             return;
+
+        if (playerData.intellectuality < 100)
+        {
+            time += Time.deltaTime;
+            if (time >= 1.0f)
+            {
+                time = 0.0f;
+                playerData.intellectuality += 2;
+                HealthEventHandler();
+            }
+        }
 
         input.moveDir = Input.GetAxisRaw("Horizontal");
         if (Input.GetButtonDown("Jump") && currSoul.MoveData.jumpCount < currSoul.Data.availableJumpCount)
@@ -136,16 +152,16 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.X))
             {
-                if (currSoul.Skills.ContainsKey(KeyCode.X) && currSoul.Skills[KeyCode.X].CanUseSkill())
+                if (currSoul.Skills.ContainsKey(KeyCode.X) && currSoul.Skills[KeyCode.X].CanUseSkill(playerData.intellectuality))
                     input.isSkillKeyDown = (true, KeyCode.X);
             }
             else if (Input.GetKeyDown(KeyCode.C))
             {
-                if (currSoul.Skills.ContainsKey(KeyCode.C) && currSoul.Skills[KeyCode.C].CanUseSkill())
+                if (currSoul.Skills.ContainsKey(KeyCode.C) && currSoul.Skills[KeyCode.C].CanUseSkill(playerData.intellectuality))
                     input.isSkillKeyDown = (true, KeyCode.C);
             }
         }
-        if(Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             playerData.AddMoney(300);
             MoneyEventHandler();
@@ -153,7 +169,7 @@ public class PlayerController : MonoBehaviour
         SkillCooldownEventHandler();
         currSoul.HandleInput(input);
         currSoul.Update(input);
-        if(ownSouls.Count == 2)
+        if (ownSouls.Count == 2)
             ownSouls[subIndex].Update(input);
     }
 
@@ -234,7 +250,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currSoul.soulState.GetType() == typeof(DeadState))
             return;
-            
+
         switch (damageType)
         {
             case DamageType.HP:
@@ -247,13 +263,13 @@ public class PlayerController : MonoBehaviour
         HealthEventHandler();
         if (!isDead())
         {
-            currSoul.Hit(input); 
+            currSoul.Hit(input);
         }
         else
         {
             currSoul.Dead(input);
         }
-            
+
     }
 
     public void GetMoney(int money)
@@ -273,5 +289,11 @@ public class PlayerController : MonoBehaviour
         if (playerData.hp <= 0 || playerData.intellectuality <= 0)
             return true;
         return false;
+    }
+
+    private void Death()
+    {
+        if (playerData.hp <= 0 || playerData.intellectuality <= 0)
+            currSoul.Dead(input);
     }
 }

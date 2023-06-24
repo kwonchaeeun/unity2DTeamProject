@@ -58,8 +58,7 @@ abstract public class IdleState : SoulState
         }
         else if (input.isSkillKeyDown.Item1)
         {
-            if (soul.Skills[input.isSkillKeyDown.Item2].CanUseSkill())
-                innerState = State.SKILL;
+            innerState = State.SKILL;
         }
         return soul.StateChanger(innerState);
     }
@@ -102,8 +101,7 @@ abstract public class WalkState : SoulState
         }
         else if (input.isSkillKeyDown.Item1)
         {
-            if (soul.Skills[input.isSkillKeyDown.Item2].CanUseSkill())
-                innerState = State.SKILL;
+            innerState = State.SKILL;
         }
         return soul.StateChanger(innerState);
     }
@@ -168,8 +166,7 @@ abstract public class JumpState : SoulState
         }
         else if (input.isSkillKeyDown.Item1)
         {
-            if (soul.Skills[input.isSkillKeyDown.Item2].CanUseSkill())
-                innerState = State.SKILL;
+            innerState = State.SKILL;
         }
         return soul.StateChanger(innerState);
     }
@@ -240,8 +237,7 @@ abstract public class FallState : SoulState
         }
         else if (input.isSkillKeyDown.Item1)
         {
-            if (soul.Skills[input.isSkillKeyDown.Item2].CanUseSkill())
-                innerState = State.SKILL;
+            innerState = State.SKILL;
         }
         return soul.StateChanger(innerState);
     }
@@ -267,7 +263,7 @@ abstract public class FallState : SoulState
 
     public override void end(Soul soul, InputManager input)
     {
-        if(soul.IsOnGround)
+        if (soul.IsOnGround)
         {
             audioClip = Resources.Load<AudioClip>("Sound/Public/Jump/landing");
             soul.Audio.clip = audioClip;
@@ -481,7 +477,7 @@ abstract public class RangedGroundBasicAttackState : GroundBasicAttackState
 
     protected bool createProjectile(Soul soul, int index)
     {
-        GameObject obj = Object.Instantiate(projectile[index], soul.mTransform.position + new Vector3(soul.MoveData.lookAt * soul.Collider.bounds.size.x, soul.Collider.offset.y, 0.0f), Quaternion.identity);
+        GameObject obj = Object.Instantiate(projectile[index], soul.mTransform.position + new Vector3(soul.MoveData.lookAt * soul.Collider.bounds.size.x * 0.5f, soul.Collider.offset.y, 0.0f), Quaternion.identity);
         obj.GetComponent<Projectile>().Initailize(soul.MoveData.lookAt, direction, 5.0f, soul.Data.damage);
         return true;
     }
@@ -584,13 +580,13 @@ public class DeadState : SoulState
         soul.Audio.clip = audioClip;
         switch (soul.MoveData.lookAt)
         {
-            case 1 :
+            case 1:
                 dead.GetComponent<SpriteRenderer>().flipX = false;
                 break;
             case -1:
                 dead.GetComponent<SpriteRenderer>().flipX = true;
                 break;
-        }    
+        }
         soul.Anime.Play("DEAD");
         soul.Audio.Play();
     }

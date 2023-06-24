@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 62b13fdd70d553842bbe523343c37b35
+guid: 7829742a1e36aa84db4db01fa2ff5ba7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,64 +105,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: atk2projectile_0
+      name: shooting_move_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 115
-        height: 57
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d1bbf8732661d446befd08b0ee4b66c
-      internalID: 1452683622
+      spriteID: ad765657a28d541438a107939443b34f
+      internalID: 919442006
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: atk2projectile_1
+      name: shooting_move_1
       rect:
         serializedVersion: 2
-        x: 115
+        x: 260
         y: 0
-        width: 115
-        height: 57
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0356c1c2adbe3d42b9ab97944185003
-      internalID: 1807655342
+      spriteID: 582d7918ea178604c8aff3454e512424
+      internalID: -853486585
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: atk2projectile_2
+      name: shooting_move_2
       rect:
         serializedVersion: 2
-        x: 230
+        x: 520
         y: 0
-        width: 115
-        height: 57
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25c5362c1811ab1438104bf122923f7d
-      internalID: -1806854754
+      spriteID: a84a781a6b007de448677ca2861b32bc
+      internalID: 1452591688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting_move_3
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 0
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a04ec0932a737f44b88a7052402305a
+      internalID: -1170944798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting_move_4
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 0
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 886a335e755d94646bdffb5a5938e297
+      internalID: 275071444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shooting_move_5
+      rect:
+        serializedVersion: 2
+        x: 1300
+        y: 0
+        width: 260
+        height: 260
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 473c1fdad4855714ea13092ecee06608
+      internalID: -622022637
       vertices: []
       indices: 
       edges: []
@@ -178,9 +241,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      atk2projectile_2: -1806854754
-      atk2projectile_0: 1452683622
-      atk2projectile_1: 1807655342
+      shooting_move_3: -1170944798
+      shooting_move_0: 919442006
+      shooting_move_5: -622022637
+      shooting_move_4: 275071444
+      shooting_move_2: 1452591688
+      shooting_move_1: -853486585
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

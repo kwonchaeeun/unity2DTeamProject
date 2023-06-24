@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 62b13fdd70d553842bbe523343c37b35
+guid: 160d4cb7495e6184aa12a495419a519d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: atk2projectile_0
+      name: beam_end_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 115
-        height: 57
+        width: 3840
+        height: 260
       alignment: 4
       pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d1bbf8732661d446befd08b0ee4b66c
-      internalID: 1452683622
+      spriteID: 25b1938462a5e474eb2b94b08c804c3e
+      internalID: 1896386674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: atk2projectile_1
+      name: beam_end_1
       rect:
         serializedVersion: 2
-        x: 115
+        x: 3840
         y: 0
-        width: 115
-        height: 57
+        width: 3840
+        height: 260
       alignment: 4
       pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0356c1c2adbe3d42b9ab97944185003
-      internalID: 1807655342
+      spriteID: 8858a6e1bc058f24e9824e12920a8eac
+      internalID: 1955602860
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: atk2projectile_2
+      name: beam_end_2
       rect:
         serializedVersion: 2
-        x: 230
+        x: 7680
         y: 0
-        width: 115
-        height: 57
+        width: 3840
+        height: 260
       alignment: 4
       pivot: {x: 0, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,8 +161,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25c5362c1811ab1438104bf122923f7d
-      internalID: -1806854754
+      spriteID: 65251ec79f625f04fa2eddab8c086d5a
+      internalID: -11267188
       vertices: []
       indices: 
       edges: []
@@ -178,9 +178,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      atk2projectile_2: -1806854754
-      atk2projectile_0: 1452683622
-      atk2projectile_1: 1807655342
+      beam_end_2: -11267188
+      beam_end_0: 1896386674
+      beam_end_1: 1955602860
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
