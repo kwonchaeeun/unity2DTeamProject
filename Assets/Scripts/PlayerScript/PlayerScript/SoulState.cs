@@ -425,7 +425,7 @@ abstract public class MeleeGroundBasicAttackState : GroundBasicAttackState
         {
             foreach (RaycastHit2D hit in hits)
             {
-                hit.collider.GetComponent<EnemySC>().Hit(soul.Data.damage);
+                hit.collider.gameObject.GetComponent<EnemySC>().Hit(soul.Data.damage);
             }
         }
         return true;

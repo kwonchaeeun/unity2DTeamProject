@@ -11,7 +11,7 @@ public class BossMonster : EnemySC
 
     void Start()
     {
-        enemyhp = 300;
+        enemyhp = 30;
         UpdateHealthBar();
 
     }
