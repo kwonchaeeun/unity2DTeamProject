@@ -36,7 +36,7 @@ public class enemyBullet : MonoBehaviour
         if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log("player");
-            playerController.Hit(DamageType.INTELLECTUALITY, 1);
+            playerController.Hit(DamageType.INTELLECTUALITY, 5);
             Destroy(gameObject);
         }
     } 

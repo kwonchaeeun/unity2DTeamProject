@@ -13,7 +13,6 @@ public class BossMonster : EnemySC
     {
         enemyhp = 300;
         UpdateHealthBar();
-
     }
 
     protected override void DropItem()

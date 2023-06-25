@@ -16,8 +16,11 @@ public class closeEnemy : MonoBehaviour
     private bool follow = false;
     private int randomIndex;
 
+    private Animator animator;
+
     void Awake()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
 
@@ -52,12 +55,14 @@ public class closeEnemy : MonoBehaviour
     void BasicMove()
     {
         rb.velocity = new Vector2(nextMove, rb.velocity.y);
+        animator.Play("CEidle");
     }
 
     void Pattern1()
     {
         if (Vector2.Distance(transform.position, target.position) > distance)
         {
+            animator.Play("CE1charge");
             enemyRangeAttack.SetActive(true);
 
             if (transform.position.x < target.position.x)
