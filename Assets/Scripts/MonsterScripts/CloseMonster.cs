@@ -20,12 +20,12 @@ public class CloseMonster : EnemySC
     {
         GameObject item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
         item.transform.position = transform.position;
-        animator.Play("CEdead");
+        //animator.Play("CEdead");
     }
 
     protected override void UpdateHealthBar()
     {
-        animator.Play("CEhurt");
+        //animator.Play("CEhurt");
         float healthRatio = (float)enemyhp / 8f; 
         healthBarSlider.value = healthRatio; 
         healthBarSlider.gameObject.SetActive(true);
