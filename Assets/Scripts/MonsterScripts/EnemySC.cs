@@ -8,7 +8,7 @@ public class EnemySC : MonoBehaviour
     public void EnemyDie()
     {
         DropItem();
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void Hit(int damage)
