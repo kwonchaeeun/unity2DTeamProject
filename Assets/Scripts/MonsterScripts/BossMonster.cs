@@ -5,32 +5,30 @@ using UnityEngine.UI;
 
 public class BossMonster : EnemySC
 {
+    public GameObject itemPrefab;
     public Slider healthBarSlider;
     private float delay = 2f;
+
     void Start()
     {
-        enemyhp = 10;
-    }
-
-    void Update()
-    {
-        if(enemyhp == 0){
-            EnemyDie();
-        }
+        enemyhp = 30;
+        UpdateHealthBar();
 
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    protected override void DropItem()
     {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            Hit();
-            healthBarSlider.value -= .1f;
-            Debug.Log(enemyhp);
-            healthBarSlider.gameObject.SetActive(true);
-            delay +=1f;
-            StartCoroutine(OffSlider());
-        }
+        GameObject item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
+        item.transform.position = transform.position;
+    }
+
+    protected override void UpdateHealthBar()
+    {
+        float healthRatio = (float)enemyhp / 30f; 
+        healthBarSlider.value = healthRatio; 
+        healthBarSlider.gameObject.SetActive(true);
+        delay += 1f;
+        StartCoroutine(OffSlider());
     }
 
     IEnumerator OffSlider()

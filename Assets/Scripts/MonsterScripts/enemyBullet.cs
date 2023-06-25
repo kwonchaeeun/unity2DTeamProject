@@ -12,10 +12,18 @@ public class enemyBullet : MonoBehaviour
     public GameObject BulletUp;
     public GameObject BulletDown;
     
-    
+    void Start()
+    {
+        Invoke("DestroyBullet",10);
+    }
     void Update()
     {
         BulletPos();
+    }
+
+    void DestroyBullet()
+    {
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -27,7 +35,6 @@ public class enemyBullet : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             Destroy(gameObject);
-            playerController.Hit(DamageType.INTELLECTUALITY, 1);
         }
     } 
 
@@ -56,6 +63,7 @@ public class enemyBullet : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             Debug.Log("player");
+            playerController.Hit(DamageType.INTELLECTUALITY, 1);
         }
     }
 }

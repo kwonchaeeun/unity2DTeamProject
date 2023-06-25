@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
     private PlayerData playerData = new PlayerData();
     public PlayerData PlayerData { get { return playerData; } }
 
-    //Input°ü·Ã º¯¼ö
+    //Inputï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private InputManager input = new InputManager();
 
     //soul
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         ownSouls = new List<Soul>();
-        //base Ä³¸¯ÅÍ ÃÊ±âÈ­
+        //base Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         InitializeSoul();
     }
     void Start()
@@ -175,14 +175,14 @@ public class PlayerController : MonoBehaviour
             //currSoul.SwapingSoul(input);
             currSoul = ownSouls[currIndex];
             this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load("Animator/SoulAnimator/" + currSoul.Data.name + "_Anime") as RuntimeAnimatorController;
-            Debug.Log("¼Ò¿ï º¯°æ");
+            Debug.Log("ï¿½Ò¿ï¿½ ï¿½ï¿½ï¿½ï¿½");
             SoulSwapEventHandler();
             input.reset();
             return true;
         }
         else
         {
-            Debug.Log("º¯°æÇÒ ¼Ò¿ïÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
             return false;
         }
 
