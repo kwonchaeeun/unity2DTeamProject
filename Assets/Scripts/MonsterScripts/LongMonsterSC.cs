@@ -5,32 +5,29 @@ using UnityEngine.UI;
 
 public class LongMonsterSC : EnemySC
 {
+    public GameObject itemPrefab;
     public Slider healthBarSlider;
     private float delay = 2f;
+
     void Start()
     {
-        enemyhp = 10;
+        enemyhp = 8;
+        UpdateHealthBar();
     }
 
-    void Update()
+    protected override void DropItem()
     {
-        if(enemyhp == 0){
-            EnemyDie();
-        }
-
+        GameObject item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
+        item.transform.position = transform.position;
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    protected override void UpdateHealthBar()
     {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            Hit();
-            healthBarSlider.value -= .1f;
-            Debug.Log(enemyhp);
-            healthBarSlider.gameObject.SetActive(true);
-            delay +=1f;
-            StartCoroutine(OffSlider());
-        }
+        float healthRatio = (float)enemyhp / 8f; 
+        healthBarSlider.value = healthRatio; 
+        healthBarSlider.gameObject.SetActive(true);
+        delay += 1f;
+        StartCoroutine(OffSlider());
     }
 
     IEnumerator OffSlider()
