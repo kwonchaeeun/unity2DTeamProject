@@ -216,7 +216,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             Debug.Log("������ �ҿ��� �������� �ʽ��ϴ�.");
-            return false;
         }
 
     }

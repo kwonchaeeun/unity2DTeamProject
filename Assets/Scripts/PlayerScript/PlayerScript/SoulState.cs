@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//handelInput¿¡¼­ Á¶°ÇÀº °°Àºµ¥ ¸®ÅÏ°ªÀÌ ´Þ¶ó ¹ß»ýÇÏ´Â Áßº¹ÄÚµå¸¦ ÁÙÀÌ±â À§ÇØ¼­ Á¤ÀÇÇÑ ¸ðµç »óÅÂ¿¡ ´ëÇÑ enum°ª Á¤ÀÇ
+//handelInputï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½ ï¿½Þ¶ï¿½ ï¿½ß»ï¿½ï¿½Ï´ï¿½ ï¿½ßºï¿½ï¿½Úµå¸¦ ï¿½ï¿½ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ enumï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 public enum State
 {
     IDLE,
@@ -425,7 +425,7 @@ abstract public class MeleeGroundBasicAttackState : GroundBasicAttackState
         {
             foreach (RaycastHit2D hit in hits)
             {
-                hit.collider.gameObject.GetComponent<EnemySC>().Hit();
+                hit.collider.gameObject.GetComponent<EnemySC>().Hit(soul.Data.damage);
             }
         }
         return true;
@@ -451,7 +451,7 @@ abstract public class MeleeAirBasicAttackState : AirBasicAttackState
         {
             foreach (RaycastHit2D hit in hits)
             {
-                hit.collider.gameObject.GetComponent<EnemySC>().Hit();
+                hit.collider.gameObject.GetComponent<EnemySC>().Hit(soul.Data.damage);
             }
         }
         return true;
