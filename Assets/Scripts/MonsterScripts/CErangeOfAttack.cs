@@ -9,6 +9,7 @@ public class CErangeOfAttack : MonoBehaviour
 
     void Start()
     {
+        playerController = GameObject.FindObjectOfType<PlayerController>();
         boxCollider = GetComponent<BoxCollider2D>();
         StartCoroutine(ToggleBoxCollider());
     }

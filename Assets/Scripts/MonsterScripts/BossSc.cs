@@ -26,7 +26,7 @@ public class BossSc : MonoBehaviour
     {
         randomIndex = Random.Range(0, 4);
         player = GameObject.FindGameObjectWithTag("Player").transform;
-
+        playerController = GameObject.FindObjectOfType<PlayerController>();
         animator = GetComponent<Animator>();
     }
 

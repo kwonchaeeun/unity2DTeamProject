@@ -15,6 +15,7 @@ public class enemyBullet : MonoBehaviour
     void Start()
     {
         Invoke("DestroyBullet",10);
+        playerController = GameObject.FindObjectOfType<PlayerController>();
     }
     void Update()
     {

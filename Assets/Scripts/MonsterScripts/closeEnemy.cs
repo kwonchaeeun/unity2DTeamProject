@@ -27,6 +27,12 @@ public class closeEnemy : MonoBehaviour
 
     void Update()
     {
+        if (Vector2.Distance(transform.position, target.position) < 15f)
+        {
+            follow = true;
+        }
+        else
+            follow = false;
 
         if (follow == false)
             BasicMove();
@@ -106,22 +112,23 @@ public class closeEnemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            follow = true;
-        }
-    }
+    // private void OnTriggerStay2D(Collider2D collision)
+    // {
+    //      if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+    //     {
+    //         follow = true;
+    //         Debug.Log("hh");
+    //     }
+    // }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            follow = false;
-        }
+    // private void OnTriggerExit2D(Collider2D collision)
+    // {
+    //     if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+    //     {
+    //         follow = false;
+    //     }
         
-    }
+    // }
 
     void Think()
     {

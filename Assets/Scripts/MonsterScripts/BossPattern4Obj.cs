@@ -10,6 +10,7 @@ public class BossPattern4Obj : MonoBehaviour
     private PlayerController playerController;
     void Start()
     {
+        playerController = GameObject.FindObjectOfType<PlayerController>();
         BossObj = GameObject.Find("BossEnemy");
     }
 

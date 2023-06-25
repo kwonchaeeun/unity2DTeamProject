@@ -19,6 +19,7 @@ public class BossPattern3Obj : MonoBehaviour
 
     void Start()
     {
+        playerController = GameObject.FindObjectOfType<PlayerController>();
         target = GameObject.FindGameObjectWithTag("BossEnemy").GetComponent<Transform>();
         initialPosition = transform.position;
         BossObj = GameObject.Find("BossEnemy");

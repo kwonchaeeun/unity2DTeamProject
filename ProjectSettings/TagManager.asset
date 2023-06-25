@@ -11,6 +11,7 @@ TagManager:
   - Wall
   - BossEnemy
   - Monster
+  - Portal
   layers:
   - Default
   - TransparentFX
