@@ -110,9 +110,12 @@ public class KnightSkill1 : Skill
         float offsetY = soul.Collider.offset.y;
         float sizeX = Mathf.Abs(startPos.x - soul.mTransform.position.x);
         RaycastHit2D[] hits = Physics2D.BoxCastAll(new Vector2(offsetX, soul.mTransform.position.y + offsetY), new Vector2(sizeX, soul.Collider.bounds.size.y), 0, Vector2.up, 0, (int)Layer.Monster);
-        foreach (RaycastHit2D hit in hits)
+        if (hits != null)
         {
-            hit.collider.GetComponent<Monster>().Hit();
+            foreach (RaycastHit2D hit in hits)
+            {
+                hit.collider.GetComponent<EnemySC>().Hit(soul.Data.damage * 2);
+            }
         }
     }
 }
@@ -180,9 +183,11 @@ public class KnightSkill2 : Skill
     private void CreateHitbox()
     {
         RaycastHit2D[] hits = Physics2D.BoxCastAll(soul.mTransform.position + new Vector3(soul.MoveData.lookAt * offset.x, offset.y, 0.0f), size, 0, Vector2.up, 0, (int)Layer.Monster);
-        foreach (RaycastHit2D hit in hits)
-        {
-            hit.collider.GetComponent<Monster>().Hit();
+        if (hits != null)
+        { foreach (RaycastHit2D hit in hits)
+            {
+                hit.collider.GetComponent<EnemySC>().Hit(soul.Data.damage);
+            }
         }
     }
 }

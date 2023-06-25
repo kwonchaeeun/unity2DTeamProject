@@ -208,16 +208,10 @@ public class PlayerController : MonoBehaviour
             }
             currSoul = ownSouls[currIndex];
             this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load("Animator/SoulAnimator/" + currSoul.Data.name + "_Anime") as RuntimeAnimatorController;
-            Debug.Log("�ҿ� ����");
             SoulSwapEventHandler();
             input.reset();
             currSoul.Start(input);
         }
-        else
-        {
-            Debug.Log("������ �ҿ��� �������� �ʽ��ϴ�.");
-        }
-
     }
 
     public void ModifySoul(string name, int selectedNum)

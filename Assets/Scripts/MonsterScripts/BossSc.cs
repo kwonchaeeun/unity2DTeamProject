@@ -8,47 +8,52 @@ public class BossSc : MonoBehaviour
     private PlayerController playerController;
     public int randomIndex;
 
-    private float speed = 5f; 
+    private float speed = 5f;
     private Transform player;
     private bool isChasing = false;
     private bool isMovingRight = true;
     bool pattern1 = false;
     public GameObject rightObject2;
-    public GameObject leftObject2; 
-    
+    public GameObject leftObject2;
+
     public GameObject rightObject3;
-    public GameObject leftObject3; 
+    public GameObject leftObject3;
     public GameObject rightObject4;
-    public GameObject leftObject4; 
+    public GameObject leftObject4;
 
     private Animator animator;
     void Start()
     {
+<<<<<<< Updated upstream
         randomIndex = Random.Range(0, 4);
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerController = GameObject.FindObjectOfType<PlayerController>();
         animator = GetComponent<Animator>();
+=======
+        randomIndex = 1;//Random.Range(0, 4);
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        animator = this.gameObject.GetComponent<Animator>();
+>>>>>>> Stashed changes
     }
 
     void Update()
     {
-        
         if (randomIndex == 0)
-            {
-                Pattern1();
-            }
-            else if (randomIndex == 1)
-            {
-                Pattern2();
-            }
-            else if (randomIndex == 2)
-            {
-                Pattern3();
-            }
-            else if (randomIndex == 3)
-            {
-                Pattern4();
-            }
+        {
+            Pattern1();
+        }
+        else if (randomIndex == 1)
+        {
+            Pattern2();
+        }
+        else if (randomIndex == 2)
+        {
+            Pattern3();
+        }
+        else if (randomIndex == 3)
+        {
+            Pattern4();
+        }
     }
 
     void Pattern1()
@@ -79,8 +84,8 @@ public class BossSc : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision)
-    {   
-        if(pattern1 == true)
+    {
+        if (pattern1 == true)
         {
             if (collision.collider.CompareTag("Wall"))
             {
@@ -90,7 +95,7 @@ public class BossSc : MonoBehaviour
                 Debug.Log("wall");
             }
 
-            if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 Debug.Log("player");
                 playerController.Hit(DamageType.HP, 1);
@@ -107,7 +112,7 @@ public class BossSc : MonoBehaviour
         randomIndex = Random.Range(0, 4);
         pattern1 = false;
     }
-    
+
     void Pattern2()
     {
         if (player != null)
@@ -170,10 +175,10 @@ public class BossSc : MonoBehaviour
 
                 }
             }
-        } 
+        }
     }
     void Pattern4()
-     {
+    {
         if (player != null)
         {
             if (Vector2.Distance(transform.position, player.position) < 20)
@@ -193,5 +198,5 @@ public class BossSc : MonoBehaviour
                 }
             }
         }
-    }    
-} 
+    }
+}
