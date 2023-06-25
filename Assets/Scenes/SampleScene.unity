@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 2965979}
   m_Layer: 7
   m_Name: BossEnemy
-  m_TagString: BossEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19769,7 +19769,7 @@ GameObject:
   - component: {fileID: 440168057}
   m_Layer: 7
   m_Name: 'CloseEnemy '
-  m_TagString: CloseEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22862,7 +22862,7 @@ GameObject:
   - component: {fileID: 937835459}
   m_Layer: 7
   m_Name: 'CloseEnemy '
-  m_TagString: CloseEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23610,7 +23610,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986520504}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.89, y: -68.26, z: 0}
+  m_LocalPosition: {x: 3.1, y: -66.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -29134,6 +29134,7 @@ GameObject:
   - component: {fileID: 1675456756}
   - component: {fileID: 1675456761}
   - component: {fileID: 1675456762}
+  - component: {fileID: 1675456763}
   m_Layer: 0
   m_Name: Portal6
   m_TagString: Portal
@@ -29300,7 +29301,105 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 315625c29b455ba44a709f5340c9969f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgmDefault: {fileID: 8300000, guid: 8a7297682fbf934418a07196e28c528c, type: 3}
+  bgm2: {fileID: 8300000, guid: 818a6c8e9219ecd4b8c005ff8183e2d9, type: 3}
   animator: {fileID: 1675456761}
+--- !u!82 &1675456763
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675456754}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 8a7297682fbf934418a07196e28c528c, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1687089522
 GameObject:
   m_ObjectHideFlags: 0
@@ -31750,7 +31849,7 @@ GameObject:
   - component: {fileID: 1741299896}
   m_Layer: 7
   m_Name: CloseEnemy
-  m_TagString: CloseEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32438,7 +32537,7 @@ GameObject:
   - component: {fileID: 1803437389}
   m_Layer: 7
   m_Name: 'CloseEnemy '
-  m_TagString: CloseEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34516,7 +34615,7 @@ GameObject:
   - component: {fileID: 2061103352}
   m_Layer: 7
   m_Name: LongEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
