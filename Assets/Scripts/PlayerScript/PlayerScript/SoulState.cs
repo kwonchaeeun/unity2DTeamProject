@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 //handelInput에서 조건은 같은데 리턴값이 달라 발생하는 중복코드를 줄이기 위해서 정의한 모든 상태에 대한 enum값 정의
 public enum State
 {
@@ -57,8 +58,7 @@ abstract public class IdleState : SoulState
         }
         else if (input.isSkillKeyDown.Item1)
         {
-            if (soul.Skills[input.isSkillKeyDown.Item2].CanUseSkill())
-                innerState = State.SKILL;
+            innerState = State.SKILL;
         }
         return soul.StateChanger(innerState);
     }
@@ -101,8 +101,7 @@ abstract public class WalkState : SoulState
         }
         else if (input.isSkillKeyDown.Item1)
         {
-            if (soul.Skills[input.isSkillKeyDown.Item2].CanUseSkill())
-                innerState = State.SKILL;
+            innerState = State.SKILL;
         }
         return soul.StateChanger(innerState);
     }
@@ -118,6 +117,7 @@ abstract public class WalkState : SoulState
                 soul.Sprite.flipX = false;
                 break;
         }
+        soul.MoveData.lookAt = (soul.Sprite.flipX) ? -1 : 1;
     }
     public override void fixedUpdate(Soul soul, InputManager input)
     {
@@ -166,13 +166,12 @@ abstract public class JumpState : SoulState
         }
         else if (input.isSkillKeyDown.Item1)
         {
-            if (soul.Skills[input.isSkillKeyDown.Item2].CanUseSkill())
-                innerState = State.SKILL;
+            innerState = State.SKILL;
         }
         return soul.StateChanger(innerState);
     }
 
-    override public void fixedUpdate(Soul soul, InputManager input)
+    public override void update(Soul soul, InputManager input)
     {
         switch (input.moveDir)
         {
@@ -183,6 +182,10 @@ abstract public class JumpState : SoulState
                 soul.Sprite.flipX = false;
                 break;
         }
+        soul.MoveData.lookAt = (soul.Sprite.flipX) ? -1 : 1;
+    }
+    override public void fixedUpdate(Soul soul, InputManager input)
+    {
         soul.mTransform.position = Vector2.MoveTowards(soul.mTransform.position, soul.mTransform.position + new Vector3(input.moveDir * soul.Data.speed * Time.fixedDeltaTime, 0, 0), 0.8f);
     }
 
@@ -234,13 +237,12 @@ abstract public class FallState : SoulState
         }
         else if (input.isSkillKeyDown.Item1)
         {
-            if (soul.Skills[input.isSkillKeyDown.Item2].CanUseSkill())
-                innerState = State.SKILL;
+            innerState = State.SKILL;
         }
         return soul.StateChanger(innerState);
     }
 
-    public override void fixedUpdate(Soul soul, InputManager input)
+    public override void update(Soul soul, InputManager input)
     {
         switch (input.moveDir)
         {
@@ -251,12 +253,17 @@ abstract public class FallState : SoulState
                 soul.Sprite.flipX = false;
                 break;
         }
+        soul.MoveData.lookAt = (soul.Sprite.flipX) ? -1 : 1;
+    }
+
+    public override void fixedUpdate(Soul soul, InputManager input)
+    {
         soul.mTransform.position = Vector2.MoveTowards(soul.mTransform.position, soul.mTransform.position + new Vector3(input.moveDir * soul.Data.speed * Time.fixedDeltaTime, 0, 0), 0.8f);
     }
 
     public override void end(Soul soul, InputManager input)
     {
-        if(soul.IsOnGround)
+        if (soul.IsOnGround)
         {
             audioClip = Resources.Load<AudioClip>("Sound/Public/Jump/landing");
             soul.Audio.clip = audioClip;
@@ -308,6 +315,7 @@ abstract public class DashState : SoulState
 
 abstract public class GroundBasicAttackState : SoulState
 {
+    protected AudioClip audioClip;
     protected float[] attackDelay = new float[3];
     protected float time;
     protected bool isAttack = false;
@@ -317,6 +325,8 @@ abstract public class GroundBasicAttackState : SoulState
         Debug.Log("Attack" + soul.AttackCount);
         soul.attacking = true;
         soul.Anime.Play("ATTACK" + soul.AttackCount.ToString());
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
         time = 0.0f;
     }
 
@@ -349,6 +359,7 @@ abstract public class GroundBasicAttackState : SoulState
 
 abstract public class AirBasicAttackState : SoulState
 {
+    protected AudioClip audioClip;
     protected float delay = 0.42f;
     protected float time = 0.0f;
     protected bool isAttack = false;
@@ -356,6 +367,8 @@ abstract public class AirBasicAttackState : SoulState
     {
         Debug.Log("AirAttack");
         soul.Anime.Play("AIRATTACK");
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
     }
 
     public override SoulState handleInput(Soul soul, InputManager input)
@@ -412,7 +425,7 @@ abstract public class MeleeGroundBasicAttackState : GroundBasicAttackState
         {
             foreach (RaycastHit2D hit in hits)
             {
-                hit.collider.gameObject.SendMessage("Hit", null, SendMessageOptions.RequireReceiver);
+                hit.collider.gameObject.GetComponent<EnemySC>().Hit();
             }
         }
         return true;
@@ -438,7 +451,7 @@ abstract public class MeleeAirBasicAttackState : AirBasicAttackState
         {
             foreach (RaycastHit2D hit in hits)
             {
-                hit.collider.gameObject.SendMessage("Hit", null, SendMessageOptions.RequireReceiver);
+                hit.collider.gameObject.GetComponent<EnemySC>().Hit();
             }
         }
         return true;
@@ -470,7 +483,7 @@ abstract public class RangedGroundBasicAttackState : GroundBasicAttackState
 
     protected bool createProjectile(Soul soul, int index)
     {
-        GameObject obj = Object.Instantiate(projectile[index], soul.mTransform.position + new Vector3(soul.MoveData.lookAt * soul.Collider.bounds.size.x, soul.Collider.offset.y, 0.0f), Quaternion.identity);
+        GameObject obj = Object.Instantiate(projectile[index], soul.mTransform.position + new Vector3(soul.MoveData.lookAt * soul.Collider.bounds.size.x * 0.5f, soul.Collider.offset.y, 0.0f), Quaternion.identity);
         obj.GetComponent<Projectile>().Initailize(soul.MoveData.lookAt, direction, 5.0f, soul.Data.damage);
         return true;
     }
@@ -510,12 +523,10 @@ public class SkillAdapterState : SoulState
         skill = soul.Skills[input.isSkillKeyDown.Item2];
         skill.start(input);
     }
-
     public override SoulState handleInput(Soul soul, InputManager input)
     {
         return soul.StateChanger(skill.handleInput(input));
     }
-
     public override void update(Soul soul, InputManager input)
     {
         skill.update(input);
@@ -534,10 +545,14 @@ public class SkillAdapterState : SoulState
 public class HitState : SoulState
 {
     float time;
+    AudioClip audioClip;
     public override void start(Soul soul, InputManager input)
     {
         Debug.Log("HitState");
         soul.Anime.Play("HIT");
+        audioClip = Resources.Load<AudioClip>("Sound/Public/Hit/HPHit");
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
         time = 0.0f;
     }
     public override SoulState handleInput(Soul soul, InputManager input)
@@ -575,13 +590,13 @@ public class DeadState : SoulState
         soul.Audio.clip = audioClip;
         switch (soul.MoveData.lookAt)
         {
-            case 1 :
+            case 1:
                 dead.GetComponent<SpriteRenderer>().flipX = false;
                 break;
             case -1:
                 dead.GetComponent<SpriteRenderer>().flipX = true;
                 break;
-        }    
+        }
         soul.Anime.Play("DEAD");
         soul.Audio.Play();
     }
@@ -600,5 +615,11 @@ public class DeadState : SoulState
     {
         Object.Destroy(dead);
         SceneManager.LoadScene("Test1");
+        respawn();
+    }
+
+    private void respawn()
+    {
+
     }
 }

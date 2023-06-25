@@ -30,7 +30,6 @@ public class Knight : Soul
         {
             skill.Value.ColldownUpdate();
         }
-        moveData.lookAt = (sprite.flipX) ? -1 : 1;
         state.update(this, input);
         if (!attacking)
         {

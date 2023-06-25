@@ -74,15 +74,11 @@ public class CooldownTime
 {
     public float dashCooldownTime;
     public bool dashCoolingdown;
-    public float skill1CooldownTime;
-    public float skill2CooldownTime;
 
     public CooldownTime()
     {
         this.dashCooldownTime = 5.0f;
         this.dashCoolingdown = true;
-        this.skill1CooldownTime = 6.0f;
-        this.skill2CooldownTime = 6.0f;
     }
 
     public void chageDash()
@@ -93,6 +89,7 @@ public class CooldownTime
 
 public abstract class Soul {
 
+    private PlayerController controller;
     //기본 컴포넌트 변수
     protected Collider2D collider;
     public Collider2D Collider { get { return collider; } set { collider = value; } }
@@ -142,6 +139,7 @@ public abstract class Soul {
     public Soul(string name)
     {
         this.data = DataManager.Instance().SoulDataDic[name].Deepcopy();
+        controller = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     public void Initialize(Collider2D collider, Rigidbody2D rigid, Transform transform, SpriteRenderer sprite, Animator anime, AudioSource audioSource)
@@ -208,5 +206,12 @@ public abstract class Soul {
         {
             isOnGround = false;
         }
+    }
+
+    public void UseCost(int cost)
+    {
+        Debug.Log("코스트 소모");
+        controller.PlayerData.UseIntellectuality(cost);
+        controller.HealthEventHandler();
     }
 }

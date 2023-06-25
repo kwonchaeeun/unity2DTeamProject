@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Vector2.Distance(startPos, this.transform.position) >= distance)
+        if (Vector2.Distance(startPos, this.transform.position) >= distance)
         {
             Destroy(this.gameObject);
         }
@@ -36,15 +36,7 @@ public class Projectile : MonoBehaviour
         this.damage = damage;
         this.lookAt = lookAt;
         this.direction = direction;
-        switch (lookAt)
-        {
-            case 1.0f:
-                this.GetComponent<SpriteRenderer>().flipX = false;
-                break;
-            case -1.0f:
-                this.GetComponent<SpriteRenderer>().flipX = true;
-                break;
-        }
+        this.transform.localScale = new Vector3(lookAt, 1.0f, 1.0f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -54,15 +46,10 @@ public class Projectile : MonoBehaviour
             collision.gameObject.GetComponent<Monster>().Hit();
             Destroy(this.gameObject);
         }
-        else if(collision.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponent<PlayerController>().Hit(DamageType.INTELLECTUALITY, 10);
-            Destroy(this.gameObject);
-        }
-        else if(collision.CompareTag("Ground") || collision.CompareTag("Platform"))
+        else if (collision.CompareTag("Ground"))
         {
             Destroy(this.gameObject);
         }
-        
+
     }
 }

@@ -10,8 +10,8 @@ public class Soldier : Soul
 
     public Soldier(string name) : base(name)
     {
-        skills.Add(KeyCode.X, new SoldierSkill(this));
-        skills.Add(KeyCode.C, new SoldierSkill(this));
+        skills.Add(KeyCode.X, new SoldierSkill1(this));
+        skills.Add(KeyCode.C, new SoldierSkill2(this));
         state = new SoldierIdleState();
     }
 
@@ -30,7 +30,6 @@ public class Soldier : Soul
         {
             skill.Value.ColldownUpdate();
         }
-        moveData.lookAt = (sprite.flipX) ? -1 : 1;
         state.update(this, input);
         if (attackCount >= 1)
             combatAttackTerm -= Time.deltaTime;

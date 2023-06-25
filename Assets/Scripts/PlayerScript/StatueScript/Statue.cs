@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Statue : MonoBehaviour
 {
-    private int[] randomNum = new int[2];
+    private AudioSource audio;
+    public AudioSource Audio { get { return audio; } set { audio = value; } }
+
+    private AudioClip audioClip;
+
+    private int[] randomNum = new int[3];
     private List<(string, bool)> soulList = new List<(string, bool)>();
     public List<(string, bool)> SoulList { get { return soulList; } }
     private List<string> playerSoulList = new List<string>();
@@ -12,8 +17,15 @@ public class Statue : MonoBehaviour
     private bool isActivatedUI = false;
     public bool IsActivatedUI { set { isActivatedUI = value; } }
     private bool isSelectedSoul = false;
-    // Start is called before the first frame update
 
+    public delegate void staueUIEventHandler(bool activate);
+    public staueUIEventHandler StaueUIEventHandler;
+
+    private void Start()
+    {
+        audio = this.GetComponent<AudioSource>();
+        audioClip = Resources.Load<AudioClip>("Sound/UISound/SelectStatue");
+    }
     // Update is called once per frame
     void Update()
     {
@@ -30,6 +42,8 @@ public class Statue : MonoBehaviour
             if (!isActivatedUI)
             {
                 UIManager.GetUIManager().ShowStatueUI(this);
+                audio.clip = audioClip;
+                audio.Play();
                 isActivatedUI = true;
             }
             else
@@ -44,7 +58,7 @@ public class Statue : MonoBehaviour
     {
         int i = 0;
         bool result = false;
-        while (i != UIManager.GetUIManager().SoulSeclectorUINum)
+        while (i < UIManager.GetUIManager().SoulSeclectorUINum)
         {
             randomNum[i] = Random.Range(0, DataManager.Instance().SoulList.Count);
             if (FindNumber(i))

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
+
 public enum DamageType
 {
     HP,
@@ -41,11 +42,24 @@ public class PlayerData
 {
     public int hp;
     public int intellectuality;
-
+    public int money;
     public PlayerData()
     {
+        this.money = 0;
         this.hp = 3;
         this.intellectuality = 100;
+    }
+    public void AddMoney(int money)
+    {
+        this.money += money;
+    }
+    public void UseMoney(int money)
+    {
+        this.money -= money;
+    }
+    public void UseIntellectuality(int cost)
+    {
+        this.intellectuality -= cost;
     }
 }
 
@@ -60,6 +74,9 @@ public class PlayerController : MonoBehaviour
 
     public delegate void soulSwapEventHandler();
     public soulSwapEventHandler SoulSwapEventHandler;
+
+    public delegate void moneyEventHandler();
+    public moneyEventHandler MoneyEventHandler;
 
     private PlayerData playerData = new PlayerData();
     public PlayerData PlayerData { get { return playerData; } }
@@ -76,6 +93,7 @@ public class PlayerController : MonoBehaviour
     public Soul CurrSoul { get { return currSoul; } }
     private List<Soul> ownSouls;
     public List<Soul> OwnSouls { get { return ownSouls; } }
+    private float time = 0.0f;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -83,9 +101,10 @@ public class PlayerController : MonoBehaviour
         //base ĳ���� �ʱ�ȭ
         InitializeSoul();
     }
+
     void Start()
     {
-
+        HealthEventHandler += Death;
     }
 
     // Update is called once per frame
@@ -93,9 +112,20 @@ public class PlayerController : MonoBehaviour
     {
         if (currSoul == null)
             return;
-        input.moveDir = Input.GetAxisRaw("Horizontal");
 
-        if (!(input.isJumpKeyDown || input.isDownJumpKeyDown) && Input.GetButtonDown("Jump") && currSoul.MoveData.jumpCount < currSoul.Data.availableJumpCount)
+        if (playerData.intellectuality < 100)
+        {
+            time += Time.deltaTime;
+            if (time >= 1.0f)
+            {
+                time = 0.0f;
+                playerData.intellectuality += 2;
+                HealthEventHandler();
+            }
+        }
+
+        input.moveDir = Input.GetAxisRaw("Horizontal");
+        if (Input.GetButtonDown("Jump") && currSoul.MoveData.jumpCount < currSoul.Data.availableJumpCount)
         {
             if (!Input.GetKey(KeyCode.DownArrow))
             {
@@ -116,27 +146,30 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Tab))
         {
-            bool result = SwapSoul();
-            if (result)
-                currSoul.Start(input);
+            SwapSoul();
         }
         if (!input.isSkillKeyDown.Item1)
         {
             if (Input.GetKeyDown(KeyCode.X))
             {
-                if (currSoul.Skills.ContainsKey(KeyCode.X) && currSoul.Skills[KeyCode.X].CanUseSkill())
+                if (currSoul.Skills.ContainsKey(KeyCode.X) && currSoul.Skills[KeyCode.X].CanUseSkill(playerData.intellectuality))
                     input.isSkillKeyDown = (true, KeyCode.X);
             }
             else if (Input.GetKeyDown(KeyCode.C))
             {
-                if (currSoul.Skills.ContainsKey(KeyCode.C) && currSoul.Skills[KeyCode.C].CanUseSkill())
+                if (currSoul.Skills.ContainsKey(KeyCode.C) && currSoul.Skills[KeyCode.C].CanUseSkill(playerData.intellectuality))
                     input.isSkillKeyDown = (true, KeyCode.C);
             }
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            playerData.AddMoney(300);
+            MoneyEventHandler();
         }
         SkillCooldownEventHandler();
         currSoul.HandleInput(input);
         currSoul.Update(input);
-        if(ownSouls.Count == 2)
+        if (ownSouls.Count == 2)
             ownSouls[subIndex].Update(input);
     }
 
@@ -155,10 +188,11 @@ public class PlayerController : MonoBehaviour
         this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load("Animator/SoulAnimator/" + currSoul.Data.name + "_Anime") as RuntimeAnimatorController;
     }
 
-    public bool SwapSoul()
+    public void SwapSoul()
     {
         if (ownSouls.Count == 2)
         {
+            currSoul.SwapingSoul(input);
             switch (currIndex)
             {
                 case 0:
@@ -172,13 +206,12 @@ public class PlayerController : MonoBehaviour
                 default:
                     break;
             }
-            //currSoul.SwapingSoul(input);
             currSoul = ownSouls[currIndex];
             this.GetComponent<Animator>().runtimeAnimatorController = Resources.Load("Animator/SoulAnimator/" + currSoul.Data.name + "_Anime") as RuntimeAnimatorController;
             Debug.Log("�ҿ� ����");
             SoulSwapEventHandler();
             input.reset();
-            return true;
+            currSoul.Start(input);
         }
         else
         {
@@ -217,11 +250,13 @@ public class PlayerController : MonoBehaviour
         return nameList;
     }
 
+
+
     public void Hit(DamageType damageType, int damage)
     {
         if (currSoul.soulState.GetType() == typeof(DeadState))
             return;
-            
+
         switch (damageType)
         {
             case DamageType.HP:
@@ -234,22 +269,37 @@ public class PlayerController : MonoBehaviour
         HealthEventHandler();
         if (!isDead())
         {
-            currSoul.Hit(input); 
+            currSoul.Hit(input);
         }
         else
         {
             currSoul.Dead(input);
         }
-            
+
     }
+
+    public void GetMoney(int money)
+    {
+        playerData.AddMoney(money);
+        MoneyEventHandler();
+    }
+
+    public void UseMoney(int money)
+    {
+        playerData.UseMoney(money);
+        MoneyEventHandler();
+    }
+
     private bool isDead()
     {
         if (playerData.hp <= 0 || playerData.intellectuality <= 0)
             return true;
         return false;
     }
-    private void OnDrawGizmos()
+
+    private void Death()
     {
-        //Gizmos.DrawWireCube(new Vector2(offsetX, offsetY), new Vector2(offsetX * 2, offsetY * 2));
+        if (playerData.hp <= 0 || playerData.intellectuality <= 0)
+            currSoul.Dead(input);
     }
 }

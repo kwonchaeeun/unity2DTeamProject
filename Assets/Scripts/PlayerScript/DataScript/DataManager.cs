@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using System.IO;
+using System;
 public class DataManager : MonoBehaviour
 {
 
@@ -21,8 +22,11 @@ public class DataManager : MonoBehaviour
     }
     private static DataManager _instance;
     private string soulDataPath = "Database/SoulData";
+    private string soulPricePath = "Database/SoulPrice";
     private Dictionary<string, SoulData> soulDataDic = new Dictionary<string, SoulData>();
     public Dictionary<string, SoulData> SoulDataDic { get { return soulDataDic; } }
+    private Dictionary<string, int> soulPriceDic = new Dictionary<string, int>();
+    public Dictionary<string, int> SoulPriceDic { get { return soulPriceDic; } }
     private List<string> soulList = new List<string>();
     public List<string> SoulList { get { return soulList; } }
 
@@ -53,6 +57,12 @@ public class DataManager : MonoBehaviour
                 new SoulData(soulData[i]["ID"].ToString(),soulData[i]["Name"].ToString(), soulData[i]["Speed"].ToString(), soulData[i]["Damage"].ToString(),
                 soulData[i]["Range"].ToString(), soulData[i]["IsUseDash"].ToString(), soulData[i]["AvailableJumpCount"].ToString()));
             soulList.Add(soulData[i]["Name"].ToString());
+        }
+        List<Dictionary<string, object>> soulPrices = CSVReader.Read(soulPricePath);
+        foreach(var soulPrice in soulPrices)
+        {
+            Int32.TryParse(soulPrice["Price"].ToString(), out int price);
+            soulPriceDic.Add(soulPrice["Name"].ToString(), price);
         }
         /*if (!File.Exists(soulDataPath))
             return;

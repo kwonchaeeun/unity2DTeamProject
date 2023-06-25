@@ -21,15 +21,16 @@ public class UIManager : MonoBehaviour
     }
 
     private static UIManager instance;
-    
+
     [SerializeField]
     private GameObject statueUI;
     private int soulSelectorUINum;
     public int SoulSeclectorUINum { get { return soulSelectorUINum; } }
     private void Awake()
     {
-        soulSelectorUINum = 2;
+        soulSelectorUINum = 3;
     }
+
     public void ShowStatueUI(Statue statue)
     {
         statueUI.SetActive(true);
