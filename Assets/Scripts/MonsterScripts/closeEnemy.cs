@@ -55,14 +55,14 @@ public class closeEnemy : MonoBehaviour
     void BasicMove()
     {
         rb.velocity = new Vector2(nextMove, rb.velocity.y);
-        animator.Play("CEidle");
+//        animator.Play("CEidle");
     }
 
     void Pattern1()
     {
         if (Vector2.Distance(transform.position, target.position) > distance)
         {
-            animator.Play("CE1charge");
+//            animator.Play("CE1charge");
             enemyRangeAttack.SetActive(true);
 
             if (transform.position.x < target.position.x)

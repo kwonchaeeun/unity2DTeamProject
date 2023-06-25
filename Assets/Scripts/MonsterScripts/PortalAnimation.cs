@@ -9,6 +9,6 @@ public class PortalAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        animator.Play("portal1");
+//        animator.Play("portal1");
     }
 }
