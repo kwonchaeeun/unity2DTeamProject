@@ -155,7 +155,23 @@ public abstract class Soul {
 
     public abstract void Start(InputManager input);
 
-    public abstract void Update(InputManager input);
+    public virtual void Update(InputManager input)
+    {
+        foreach (KeyValuePair<KeyCode, Skill> skill in Skills)
+        {
+            skill.Value.ColldownUpdate();
+        }
+        state.update(this, input);
+        if (attackCount >= 1)
+            combatAttackTerm -= Time.deltaTime;
+        if (attackCount == 3)
+            attackCount = 0;
+        if (combatAttackTerm <= 0)
+        {
+            combatAttackTerm = 1.5f;
+            attackCount = 0;
+        }
+    }
 
     public abstract void FixedUpdate(InputManager input);
 
