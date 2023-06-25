@@ -16,7 +16,7 @@ public class MagicianGroundBasicAttackState : RangedGroundBasicAttackState
 {
     public override void start(Soul soul, InputManager input)
     {
-        audioClip = Resources.Load<AudioClip>("Sound/Soldier/Attack/Attack");
+        audioClip = Resources.Load<AudioClip>("Sound/Magician/Attack/Attack0");
         base.start(soul, input);
         attackDelay[0] = attackDelay[1] = attackDelay[2] = 0.417f;
         projectile.Add(Resources.Load<GameObject>("Prefab/Projectile/MagicianBaseProjectile1"));
@@ -40,22 +40,23 @@ public class MagicianAirBasicAttackState : RangedAirBasicAttackState
     public override void start(Soul soul, InputManager input)
     {
         delay = 0.25f;
-        audioClip = Resources.Load<AudioClip>("Sound/Soldier/Attack/Attack");
+        audioClip = Resources.Load<AudioClip>("Sound/Magician/Attack/Attack1");
         base.start(soul, input);
         projectile = Resources.Load<GameObject>("Prefab/Projectile/MagicianBaseProjectile1");
         Debug.Log(projectile.name);
     }
 }
 
-
 public class MagicianSkill1 : Skill
 {
+    AudioClip audioClip;
     private GameObject prefab;
     private Vector3 offset;
     private float time;
     public MagicianSkill1(Soul soul) : base(soul, 2.0f, 5)
     {
         prefab = Resources.Load<GameObject>("Prefab/Projectile/MagicianSkill1Projectile");
+        audioClip = Resources.Load<AudioClip>("Sound/Magician/Skill1/Attack");
     }
 
     public override void start(InputManager input)
@@ -71,6 +72,8 @@ public class MagicianSkill1 : Skill
             GameObject.Instantiate(prefab, soul.mTransform.position + offset, Quaternion.identity).GetComponent<GuidedMissile>().Initailize(soul.Data.damage * 3);
         }
         soul.Anime.Play("SKILL1");
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
     }
 
     public override State handleInput(InputManager input)
@@ -135,6 +138,7 @@ public abstract class MagicianSkill2State
 
 public class MagicianSkill2ChargeState : MagicianSkill2State
 {
+    AudioClip audioClip;
     private GameObject prefab;
     private GameObject projectile;
     private Vector3 offset;
@@ -142,10 +146,13 @@ public class MagicianSkill2ChargeState : MagicianSkill2State
     public override void start(Soul soul, float time)
     {
         time = 0.0f;
+        audioClip = Resources.Load<AudioClip>("Sound/Magician/Skill2/Charge");
         prefab = Resources.Load<GameObject>("Prefab/Projectile/MagicianSkill2ChargeProjectile");
         offset = new Vector3(soul.MoveData.lookAt * 1.5f, 1.1f, 0.0f);
         projectile = GameObject.Instantiate(prefab, soul.mTransform.position + offset, Quaternion.identity);
         soul.Anime.Play("SKILL2CHARGE");
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
     }
     public override MagicianSkill2State handleInput(Soul soul)
     {
@@ -169,15 +176,19 @@ public class MagicianSkill2ChargeState : MagicianSkill2State
 
 public class MagicianSkill2AttackState : MagicianSkill2State
 {
+    AudioClip audioClip;
     private Vector3 offset;
     private GameObject prefab;
     float time = 0.0f;
     public override void start(Soul soul, float size)
     {
         offset = new Vector3(soul.MoveData.lookAt * 1.5f, 1.1f, 0.0f);
+        audioClip = Resources.Load<AudioClip>("Sound/Magician/Skill2/Charge");
         prefab = Resources.Load<GameObject>("Prefab/Projectile/MagicianSkill2Projectile");
         GameObject.Instantiate(prefab, soul.mTransform.position + offset, Quaternion.identity).GetComponent<GuidedMissileFar>().Initailize(soul.Data.damage * 4, 1.0f + size);
         soul.Anime.Play("SKILL2ATTACK");
+        soul.Audio.clip = audioClip;
+        soul.Audio.Play();
     }
     public override MagicianSkill2State handleInput(Soul soul)
     {

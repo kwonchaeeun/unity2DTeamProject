@@ -22,7 +22,7 @@ public class SoulSelectorUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audioClips[0] = Resources.Load<AudioClip>(soundPath + "BaseClick");
+        audioClips[0] = Resources.Load<AudioClip>(soundPath + "SoulSelect");
         audioClips[1] = Resources.Load<AudioClip>(soundPath + "BadClick");
         this.GetComponent<Button>().onClick.AddListener(ModifyPlayerSoul);
     }
