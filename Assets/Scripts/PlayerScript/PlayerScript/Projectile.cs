@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     private Vector2 startPos = new Vector2();
     private float distance;
     private Vector2 direction;
-    private float damage;
+    private int damage;
     private float lookAt;
     private float speed = 8.0f;
     void Start()
@@ -33,7 +33,7 @@ public class Projectile : MonoBehaviour
     public void Initailize(float lookAt, Vector2 direction, float distance, float damage)
     {
         this.distance = distance;
-        this.damage = damage;
+        this.damage = (int)damage;
         this.lookAt = lookAt;
         this.direction = direction;
         this.transform.localScale = new Vector3(lookAt, 1.0f, 1.0f);
@@ -41,9 +41,9 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Monster"))
+        if (collision.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<Monster>().Hit();
+            collision.gameObject.GetComponent<EnemySC>().Hit(this.damage);
             Destroy(this.gameObject);
         }
         else if (collision.CompareTag("Ground"))
