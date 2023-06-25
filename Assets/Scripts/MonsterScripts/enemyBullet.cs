@@ -32,8 +32,10 @@ public class enemyBullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
+            Debug.Log("player");
+            playerController.Hit(DamageType.INTELLECTUALITY, 1);
             Destroy(gameObject);
         }
     } 
@@ -58,12 +60,4 @@ public class enemyBullet : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            Debug.Log("player");
-            playerController.Hit(DamageType.INTELLECTUALITY, 1);
-        }
-    }
 }

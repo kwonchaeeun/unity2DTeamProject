@@ -119,7 +119,7 @@ public class BossPattern3Obj : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
