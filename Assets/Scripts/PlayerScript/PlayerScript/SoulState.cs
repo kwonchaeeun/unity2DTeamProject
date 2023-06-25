@@ -483,8 +483,8 @@ abstract public class RangedGroundBasicAttackState : GroundBasicAttackState
 
     protected bool createProjectile(Soul soul, int index)
     {
-        GameObject obj = Object.Instantiate(projectile[index], soul.mTransform.position + new Vector3(soul.MoveData.lookAt * soul.Collider.bounds.size.x * 0.5f, soul.Collider.offset.y, 0.0f), Quaternion.identity);
-        obj.GetComponent<Projectile>().Initailize(soul.MoveData.lookAt, direction, 5.0f, soul.Data.damage);
+        GameObject obj = Object.Instantiate(projectile[index], soul.mTransform.position + new Vector3(soul.MoveData.lookAt * soul.Collider.bounds.size.x, soul.Collider.offset.y, 0.0f), Quaternion.identity);
+        obj.GetComponent<Projectile>().Initailize(soul.MoveData.lookAt, direction, soul.Data.range, soul.Data.damage);
         return true;
     }
 }
@@ -510,7 +510,7 @@ abstract public class RangedAirBasicAttackState : AirBasicAttackState
     private bool createProjectile(Soul soul)
     {
         GameObject obj = Object.Instantiate(projectile, soul.mTransform.position + new Vector3(soul.MoveData.lookAt * soul.Collider.bounds.size.x, soul.Collider.offset.y, 0.0f), Quaternion.identity);
-        obj.GetComponent<Projectile>().Initailize(soul.MoveData.lookAt, direction, 5.0f, soul.Data.damage);
+        obj.GetComponent<Projectile>().Initailize(soul.MoveData.lookAt, direction, soul.Data.range, soul.Data.damage);
         return true;
     }
 }

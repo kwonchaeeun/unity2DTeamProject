@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Soldier : Soul
 {
-
-    private float coolTime = 0.0f;
     public Soldier() { }
 
     public Soldier(string name) : base(name)
@@ -26,29 +24,7 @@ public class Soldier : Soul
 
     override public void Update(InputManager input)
     {
-        foreach (KeyValuePair<KeyCode, Skill> skill in Skills)
-        {
-            skill.Value.ColldownUpdate();
-        }
-        state.update(this, input);
-        if (attackCount >= 1)
-            combatAttackTerm -= Time.deltaTime;
-        if (attackCount == 3)
-            attackCount = 0;
-        if (combatAttackTerm <= 0)
-        {
-            combatAttackTerm = 1.5f;
-            attackCount = 0;
-        }
-        if (!cooldownTime.dashCoolingdown)
-        {
-            coolTime += Time.deltaTime;
-            if (cooldownTime.dashCooldownTime <= coolTime)
-            {
-                coolTime = 0.0f;
-                cooldownTime.dashCoolingdown = true;
-            }
-        }
+        base.Update(input);
     }
 
     override public void FixedUpdate(InputManager input)

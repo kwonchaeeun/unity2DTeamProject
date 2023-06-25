@@ -116,6 +116,7 @@ public class SoldierSkill1 : Skill
         if (Input.GetKeyDown(KeyCode.X))
         {
             isSkillAvailable = false;
+            input.reset();
             return State.IDLE;
         }
         if (gunSoldierState.handleInput(soul, gun) != null)
@@ -257,7 +258,7 @@ public class SoldierSkillAttackState : SoldierSkillState
     private void createProjectile(Soul soul, Gun gun)
     {
         GameObject obj = Object.Instantiate(gun.prefab, gun.gun.transform.GetChild(0).position, gun.gun.transform.rotation);
-        obj.GetComponent<Projectile>().Initailize(soul.MoveData.lookAt, gun.direction, 7.0f, soul.Data.damage);
+        obj.GetComponent<Projectile>().Initailize(soul.MoveData.lookAt, gun.direction, soul.Data.range, soul.Data.damage);
     }
 }
 

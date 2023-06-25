@@ -249,8 +249,6 @@ public class PlayerController : MonoBehaviour
         return nameList;
     }
 
-
-
     public void Hit(DamageType damageType, int damage)
     {
         if (currSoul.soulState.GetType() == typeof(DeadState))

@@ -26,23 +26,7 @@ public class Knight : Soul
 
     override public void Update(InputManager input)
     {
-        foreach (KeyValuePair<KeyCode, Skill> skill in Skills)
-        {
-            skill.Value.ColldownUpdate();
-        }
-        state.update(this, input);
-        if (!attacking)
-        {
-            if (attackCount >= 1)
-                combatAttackTerm -= Time.deltaTime;
-            if (combatAttackTerm <= 0)
-            {
-                combatAttackTerm = 1.5f;
-                attackCount = 0;
-            }
-        }
-        if (attackCount == 3)
-            attackCount = 0;
+        base.Update(input);
         //dash
         if (!cooldownTime.dashCoolingdown)
         {
