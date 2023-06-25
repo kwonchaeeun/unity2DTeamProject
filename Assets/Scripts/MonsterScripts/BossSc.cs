@@ -24,7 +24,6 @@ public class BossSc : MonoBehaviour
     private Animator animator;
     void Start()
     {
-<<<<<<< Updated upstream
         randomIndex = Random.Range(0, 4);
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerController = GameObject.FindObjectOfType<PlayerController>();
