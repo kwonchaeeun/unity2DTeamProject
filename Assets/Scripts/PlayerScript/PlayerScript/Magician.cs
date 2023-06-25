@@ -7,7 +7,7 @@ public class Magician : Soul
     public Magician(string name) : base(name)
     {
         skills.Add(KeyCode.X, new MagicianSkill1(this));
-        skills.Add(KeyCode.C, new KnightSkill1(this));
+        skills.Add(KeyCode.C, new MagicianSkill2(this));
         state = new MagicianIdleState();
     }
 

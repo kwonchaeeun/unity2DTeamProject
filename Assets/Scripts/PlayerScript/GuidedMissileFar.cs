@@ -2,54 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-public class GuidedMissile : MonoBehaviour
+
+public class GuidedMissileFar : MonoBehaviour
 {
     private Vector3 target;
     private Dictionary<float, Vector3> targetDic = new Dictionary<float, Vector3>();
     private int damage;
-    private int count = 0;
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine("TimeOver");
         targetDic = FindEnemy();
         if (targetDic != null)
-            target = targetDic.First().Value;
+            target = targetDic.Last().Value;
         else
-            target = this.transform.position;
+            Destroy(this.gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = Vector2.MoveTowards(this.transform.position, target, 12.0f * 0.8f * Time.deltaTime);
-        if(this.transform.position == target && count == 0)
-        {
-            targetDic = FindEnemy();
-            if (targetDic != null)
-                target = targetDic.First().Value;
-            else
-                Destroy(this.gameObject);
-        }
+        this.transform.position = Vector2.MoveTowards(this.transform.position, target, 10.0f * 0.8f * Time.deltaTime);
+        if (target == this.transform.position)
+            Destroy(this.gameObject);
     }
 
-    public void Initailize(int damage)
+    public void Initailize(int damage, float size)
     {
         this.damage = damage;
+        this.transform.localScale *= size; 
     }
 
     public Dictionary<float, Vector3> FindEnemy()
     {
         RaycastHit2D[] enemys = Physics2D.CircleCastAll(this.transform.position, 20.0f, Vector2.up, 0.0f, (int)Layer.Monster);
-        if(enemys.Length != 0)
+        if (enemys.Length != 0)
         {
             Dictionary<float, Vector3> tempDic = new Dictionary<float, Vector3>();
-            foreach(RaycastHit2D enemy in enemys)
+            foreach (RaycastHit2D enemy in enemys)
             {
-                tempDic.Add( Vector2.Distance(this.transform.position, enemy.transform.position),enemy.transform.position);
+                tempDic.Add(Vector2.Distance(this.transform.position, enemy.transform.position), enemy.transform.position);
             }
             Debug.Log("½ÇÇà");
-            return tempDic.OrderBy(item => item.Key).ToDictionary(x => x.Key, x => x.Value);          
+            return tempDic.OrderBy(item => item.Key).ToDictionary(x => x.Key, x => x.Value);
         }
         return null;
     }
@@ -62,10 +57,9 @@ public class GuidedMissile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy"))
         {
             collision.GetComponent<EnemySC>().Hit(this.damage);
-            Destroy(this.gameObject);
         }
     }
 }
