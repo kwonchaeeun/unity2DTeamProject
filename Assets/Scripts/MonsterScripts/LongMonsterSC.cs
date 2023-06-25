@@ -19,6 +19,7 @@ public class LongMonsterSC : EnemySC
     {
         GameObject item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
         item.transform.position = transform.position;
+        item.GetComponent<Money>().Initialize(100);
     }
 
     protected override void UpdateHealthBar()

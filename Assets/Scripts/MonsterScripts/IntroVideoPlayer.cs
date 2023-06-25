@@ -10,6 +10,11 @@ public class IntroVideoPlayer : MonoBehaviour
     public VideoPlayer videoPlayer;           
 
     private bool videoPlayed;         
+
+    private void Start()
+    {
+        videoPlayer.loopPointReached += OnVideoEnd;
+    }
     private void Update()
     {
         if (videoPlayer.isPlaying && !videoPlayed && Input.anyKeyDown)
@@ -23,5 +28,14 @@ public class IntroVideoPlayer : MonoBehaviour
     {
         videoPlayer.Stop();              
         SceneManager.LoadScene("Main");    
+    }
+
+    private void OnVideoEnd(VideoPlayer player)
+    {
+        if (!videoPlayed)
+        {
+            videoPlayed = true;
+            StopVideoAndLoadMainScene();
+        }
     }
 }

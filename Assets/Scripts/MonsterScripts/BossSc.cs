@@ -20,7 +20,9 @@ public class BossSc : MonoBehaviour
     public GameObject leftObject3;
     public GameObject rightObject4;
     public GameObject leftObject4;
+    public Transform playerTransform;
 
+    public SpriteRenderer monsterSprite;
     private Animator animator;
     void Start()
     {
@@ -48,12 +50,21 @@ public class BossSc : MonoBehaviour
         {
             Pattern4();
         }
+
+        if (playerTransform.position.x < transform.position.x)
+        {
+            monsterSprite.flipX = false; 
+        }
+        else
+        {
+            monsterSprite.flipX = true; 
+        }
     }
 
     void Pattern1()
     {
         pattern1 = true;
-        animator.SetTrigger("pattern2");
+        animator.Play("BossWalk");
         if (player != null && !isChasing)
         {
             if (Vector2.Distance(transform.position, player.position) < 20f)
@@ -111,6 +122,7 @@ public class BossSc : MonoBehaviour
     {
         if (player != null)
         {
+            animator.Play("be2");
             float distance = Vector2.Distance(transform.position, player.position);
 
             if (!isChasing && 10 < distance && distance < 20)
@@ -153,6 +165,7 @@ public class BossSc : MonoBehaviour
     {
         if (player != null)
         {
+            animator.Play("be3");
             if (Vector2.Distance(transform.position, player.position) < 20)
             {
                 Vector2 playerDirection = player.position - transform.position;
@@ -175,6 +188,7 @@ public class BossSc : MonoBehaviour
     {
         if (player != null)
         {
+            animator.Play("be4");
             if (Vector2.Distance(transform.position, player.position) < 20)
             {
                 Vector2 playerDirection = player.position - transform.position;

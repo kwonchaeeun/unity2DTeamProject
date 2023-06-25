@@ -17,6 +17,9 @@ public class closeEnemy : MonoBehaviour
     private int randomIndex;
 
     private Animator animator;
+    public Transform playerTransform;
+
+    public SpriteRenderer monsterSprite;
 
     void Awake()
     {
@@ -50,6 +53,17 @@ public class closeEnemy : MonoBehaviour
                 Pattern2();
             }
         }
+
+        if (playerTransform.position.x < transform.position.x)
+        {
+            monsterSprite.flipX = false; 
+        }
+        else
+        {
+            monsterSprite.flipX = true; 
+        }
+        
+              
     }
 
     void BasicMove()
@@ -62,7 +76,7 @@ public class closeEnemy : MonoBehaviour
     {
         if (Vector2.Distance(transform.position, target.position) > distance)
         {
-//            animator.Play("CE1charge");
+            animator.Play("CE1attk");
             enemyRangeAttack.SetActive(true);
 
             if (transform.position.x < target.position.x)
@@ -85,6 +99,7 @@ public class closeEnemy : MonoBehaviour
     {
         if (Vector2.Distance(transform.position, target.position) > distance)
         {
+            animator.Play("CE2attk");
             if (target.position.x > transform.position.x)
             {
                 rObject.SetActive(true);

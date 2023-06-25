@@ -11,7 +11,7 @@ public class CloseMonster : EnemySC
     private Animator animator;
     void Start()
     {
-        enemyhp = 8;
+        enemyhp = 200;
         UpdateHealthBar();
         animator = GetComponent<Animator>();
     }
@@ -20,6 +20,7 @@ public class CloseMonster : EnemySC
     {
         GameObject item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
         item.transform.position = transform.position;
+        item.GetComponent<Money>().Initialize(100);
         //animator.Play("CEdead");
     }
 

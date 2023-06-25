@@ -11,7 +11,7 @@ public class BossMonster : EnemySC
 
     void Start()
     {
-        enemyhp = 300;
+        enemyhp = 2000;
         UpdateHealthBar();
     }
 
@@ -19,6 +19,7 @@ public class BossMonster : EnemySC
     {
         GameObject item = Instantiate(itemPrefab, transform.position, Quaternion.identity);
         item.transform.position = transform.position;
+        item.GetComponent<Money>().Initialize(100);
     }
 
     protected override void UpdateHealthBar()
