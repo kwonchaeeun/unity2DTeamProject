@@ -227,8 +227,8 @@ public class PlayerController : MonoBehaviour
         {
             object[] args = new object[] { name };
             Type t = Type.GetType(name);
-            ownSouls[selectedNum] = (Soul)System.Activator.CreateInstance(t, args);
-            ownSouls[selectedNum].Initialize(this.GetComponent<Collider2D>(), this.GetComponent<Rigidbody2D>(), this.transform, this.GetComponent<SpriteRenderer>(), this.GetComponent<Animator>(), this.GetComponent<AudioSource>());
+            ownSouls[subIndex] = (Soul)System.Activator.CreateInstance(t, args);
+            ownSouls[subIndex].Initialize(this.GetComponent<Collider2D>(), this.GetComponent<Rigidbody2D>(), this.transform, this.GetComponent<SpriteRenderer>(), this.GetComponent<Animator>(), this.GetComponent<AudioSource>());
         }
         SoulSwapEventHandler();
     }

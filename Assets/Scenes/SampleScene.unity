@@ -20301,7 +20301,7 @@ MonoBehaviour:
   target: {fileID: 986520511}
   smoothSpeed: 0.1
   offset: {x: 0, y: 0, z: -10}
-  minValue: {x: 19, y: -63, z: 0}
+  minValue: {x: 19, y: -62.5, z: 0}
   maxValue: {x: 2000, y: 2000, z: 0}
 --- !u!1 &542181388
 GameObject:
