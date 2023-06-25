@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyhp: 0
-  itemPrefab: {fileID: 5425387317722274478, guid: 00e11a1635173704ea88b55f45a9cef2, type: 3}
+  itemPrefab: {fileID: 965197193623404087, guid: 6e3d5551b2c0f4c4cbd952b8bad9a65a, type: 3}
   healthBarSlider: {fileID: 1946779333}
 --- !u!95 &2965979
 Animator:
@@ -20255,7 +20255,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 19.221008
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -20300,8 +20300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 986520511}
   smoothSpeed: 0.1
-  offset: {x: 10, y: 10, z: -10}
-  minValue: {x: -1000, y: -1000, z: 0}
+  offset: {x: 0, y: 0, z: -10}
+  minValue: {x: 19, y: -63, z: 0}
   maxValue: {x: 2000, y: 2000, z: 0}
 --- !u!1 &542181388
 GameObject:
@@ -22799,6 +22799,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218e37cbf0b51d949b7e806fddb34e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &914742522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 914742523}
+  - component: {fileID: 914742524}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &914742523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914742522}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 56.84246, y: -62.78608, z: -0.26951072}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &914742524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914742522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25df472b730b4aa46b05c9a26ed87d43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statueUI: {fileID: 876254769}
 --- !u!1 &937835451
 GameObject:
   m_ObjectHideFlags: 0
@@ -23322,6 +23367,7 @@ GameObject:
   - component: {fileID: 986520506}
   - component: {fileID: 986520505}
   - component: {fileID: 986520512}
+  - component: {fileID: 986520513}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -23564,7 +23610,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986520504}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 707.6, y: -69.2, z: 0}
+  m_LocalPosition: {x: 1.89, y: -68.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23584,6 +23630,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BG: {fileID: 963658385}
+--- !u!114 &986520513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986520504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cccb355df21704f91ac8d7bcc91487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &991957416
 GameObject:
   m_ObjectHideFlags: 0
@@ -29017,11 +29075,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5338438097732872440, guid: 081094c597086ea4c98c85730136d07f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 639.63
+      value: 639.68
       objectReference: {fileID: 0}
     - target: {fileID: 5338438097732872440, guid: 081094c597086ea4c98c85730136d07f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -66.01
+      value: -66.36
       objectReference: {fileID: 0}
     - target: {fileID: 5338438097732872440, guid: 081094c597086ea4c98c85730136d07f, type: 3}
       propertyPath: m_LocalPosition.z

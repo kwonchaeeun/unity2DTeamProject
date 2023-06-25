@@ -11,7 +11,7 @@ public class LongMonsterSC : EnemySC
 
     void Start()
     {
-        enemyhp = 8;
+        enemyhp = 200;
         UpdateHealthBar();
     }
 
