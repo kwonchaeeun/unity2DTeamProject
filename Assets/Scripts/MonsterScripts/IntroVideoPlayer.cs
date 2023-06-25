@@ -17,7 +17,7 @@ public class IntroVideoPlayer : MonoBehaviour
     }
     private void Update()
     {
-        if (videoPlayer.isPlaying && !videoPlayed && Input.anyKeyDown)
+        if (videoPlayer.isPlaying && !videoPlayed && Input.GetKeyDown(KeyCode.Space))
         {
             videoPlayed = true;
             StopVideoAndLoadMainScene();
